@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">Quién Quiere Ser Millonario</string>
+    <string name="menu_credits">Creditos</string>
+    <string name="title_activity_main">Quién Quiere Ser Millonario</string>
+    <string name="play">Juega!</string>
+    <string name="scores">Resultados</string>
+    <string name="settings">Ajustos</string>
+    <string name="title_activity_settings">Quién Quiere Ser Millonario - Ajustos</string>
+    <string name="title_activity_play">Quién Quiere Ser Millonario - Preguntas</string>
+    <string name="title_activity_score">Quién Quiere Ser Millonario - Resultados</string>
+    <string name="player_name">Nombre</string>
+    <string name="question_nb_lbl">Pregunta:</string>
+    <string name="level_lbl">Jugar por:</string>
+
+</resources>

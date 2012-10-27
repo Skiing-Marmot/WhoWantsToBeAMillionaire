@@ -1,0 +1,30 @@
+<resources>
+
+    <string name="app_name">Who Wants To Be A Millionaire</string>
+    <string name="menu_credits">Credits</string>
+    <string name="title_activity_main">Who Wants To Be A Millionaire - Home</string>
+    <string name="play">Play!</string>
+    <string name="scores">Scores</string>
+    <string name="settings">Settings</string>
+    <string name="title_activity_settings">Who Wants To Be A Millionaire - Settings</string>
+    <string name="title_activity_play">Who Wants To Be A Millionaire - Play</string>
+    <string name="title_activity_score">Who Wants To Be A Millionaire - Scores</string>
+    <string name="player_name">Name</string>
+    <string name="question_nb_lbl">Question:</string>
+    <string name="level_lbl">Play for:</string>
+    <string name="local_tab_title">Local Scores</string>
+    <string name="friends_tab_title">Friends Scores</string>
+    <string name="menu_clean_scores">Delete local scores</string>
+    <string name="menu_jokers_phone">Phone</string>
+    <string name="menu_jokers_fifty">50%</string>
+    <string name="menu_jokers_audience">Audience</string>
+    <string name="hint_player_name">Player Name</string>
+
+    <string-array name="strNbHelp">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+</resources>
