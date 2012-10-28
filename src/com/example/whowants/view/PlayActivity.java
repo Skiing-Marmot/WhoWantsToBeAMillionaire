@@ -3,6 +3,7 @@ package com.example.whowants.view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -113,9 +114,9 @@ public class PlayActivity extends Activity {
 	ArrayList<Question> list = new ArrayList<Question>();
 
 	try {
-	    FileInputStream fileInputStream = openFileInput("questions0001.xml");
+	    InputStream inputStream = getResources().openRawResource(R.raw.questions0001);
 	    XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-	    parser.setInput(fileInputStream, null);
+	    parser.setInput(inputStream, null);
 	    int eventType = XmlPullParser.START_DOCUMENT;
 
 	    while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -134,7 +135,7 @@ public class PlayActivity extends Activity {
 		eventType = parser.next();
 	    }
 	    
-	    fileInputStream.close();
+	    inputStream.close();
 
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
