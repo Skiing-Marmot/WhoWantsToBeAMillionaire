@@ -1,0 +1,2 @@
+1. Dashboard
+2. variables en dur dans playActivity.java
