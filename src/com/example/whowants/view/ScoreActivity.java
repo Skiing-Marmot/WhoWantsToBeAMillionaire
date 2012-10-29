@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TableLayout;
@@ -17,6 +18,7 @@ public class ScoreActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_score);
         setScoresTab();
         setLocalTableLayout();
@@ -39,6 +41,7 @@ public class ScoreActivity extends Activity {
     private void deleteLocalScores() {
     	TableLayout table = (TableLayout) findViewById(R.id.localTableLayout);
     	table.removeAllViews();
+    	// TODO delete scores from DB
 	}
 
 	private void setScoresTab() {
