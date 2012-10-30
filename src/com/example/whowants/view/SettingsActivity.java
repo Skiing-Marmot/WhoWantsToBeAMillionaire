@@ -153,7 +153,5 @@ public class SettingsActivity extends Activity {
 			    friendNameTxt.setText("");
 		    }
 		}
-
-		
 	}
 }
