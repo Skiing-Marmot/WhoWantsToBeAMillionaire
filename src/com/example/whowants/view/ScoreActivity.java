@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.UTFDataFormatException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -213,6 +214,7 @@ public class ScoreActivity extends Activity {
 
 		// Display the scores in the table
 		List<HighScore> scores = friendScoreList.getScores();
+		Collections.sort(scores, Collections.reverseOrder());
 		int length = scores.size();
 
 		for (int i = 0; i < length; i++) {
