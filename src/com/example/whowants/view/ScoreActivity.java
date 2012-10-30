@@ -15,8 +15,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,6 +117,9 @@ public class ScoreActivity extends Activity {
     }
 
     private void setFriendsTableLayout() {
+	// Display progress bar
+	ScoreActivity.this.setProgressBarIndeterminate(true);
+	ScoreActivity.this.setProgressBarIndeterminateVisibility(true);
 	// Get player name from the sharedPreferences
 	SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_FILE_NAME, MODE_PRIVATE);
 	String playerName = sharedPreferences.getString(SHARED_PREF_NAME_KEY, "");
@@ -225,6 +226,10 @@ public class ScoreActivity extends Activity {
 		    row.addView(tv);
 		    table.addView(row);
 		}
+		
+		// Hide progress bar
+		ScoreActivity.this.setProgressBarIndeterminate(false);
+		ScoreActivity.this.setProgressBarIndeterminateVisibility(false);
 	    }
 	}
     }
