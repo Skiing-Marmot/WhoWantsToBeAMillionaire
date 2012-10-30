@@ -1,11 +1,6 @@
 package com.example.whowants.view;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UTFDataFormatException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,9 +11,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -27,32 +21,31 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.whowants.R;
-import com.example.whowants.model.HighScore;
-import com.example.whowants.model.HighScoreList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.example.whowants.R;
+import com.example.whowants.model.HighScore;
+import com.example.whowants.model.HighScoreList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class ScoreActivity extends Activity {
 
     private String	      SHARED_PREF_FILE_NAME = "settingsPreferences";
     private String	      SHARED_PREF_NAME_KEY  = "playerName";
-    private static final String GET_HIGHSCORES_URL    = "http://soletaken.disca.upv.es:8080/WWTBAM/rest/highscores?name=Clem";
+    private static final String GET_HIGHSCORES_URL    = "http://soletaken.disca.upv.es:8080/WWTBAM/rest/highscores";
     private static final String PLAYER_NAME_KEY       = "name";
 
     @Override
@@ -148,11 +141,11 @@ public class ScoreActivity extends Activity {
 	    playerName = params[0];
 
 	    HttpClient client = new DefaultHttpClient();
-	    HttpGet request = new HttpGet(GET_HIGHSCORES_URL);
-
-	   // HttpParams httpParams = new BasicHttpParams();
-	    //httpParams.setParameter(PLAYER_NAME_KEY, playerName);
-	    //request.setParams(httpParams);
+	    
+	    List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+	    pairs.add(new BasicNameValuePair(PLAYER_NAME_KEY, playerName));
+	    HttpGet request = new HttpGet(GET_HIGHSCORES_URL + "?" + URLEncodedUtils.format(pairs, "utf-8"));
+	    request.setHeader("Accept", "application/json");	    
 
 	    try {
 		response = client.execute(request);
@@ -190,6 +183,11 @@ public class ScoreActivity extends Activity {
 	    // TODO Auto-generated method stub
 	    super.onPostExecute(result);
 	    if (result) {
+		
+		if(responseString.equals("null")) {
+		    return;
+		}
+		
 		TableLayout table = (TableLayout) findViewById(R.id.friendsTableLayout);
 		TableRow row;
 		TextView tv;
