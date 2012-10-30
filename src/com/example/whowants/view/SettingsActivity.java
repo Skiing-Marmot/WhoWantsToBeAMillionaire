@@ -144,5 +144,16 @@ public class SettingsActivity extends Activity {
 			// Change something in the interface
 		}
 
+		@Override
+		protected void onPostExecute(Boolean result) {
+		    // TODO Auto-generated method stub
+		    super.onPostExecute(result);
+		    if(result) {
+			    final EditText friendNameTxt = (EditText) findViewById(R.id.editFriendName);
+			    friendNameTxt.setText("");
+		    }
+		}
+
+		
 	}
 }
