@@ -3,7 +3,6 @@ package com.example.whowants.view;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -14,8 +13,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +59,7 @@ public class ScoreActivity extends Activity {
 		setContentView(R.layout.activity_score);
 		setScoresTab();
 		setLocalTableLayout();
-		//setFriendsTableLayout();
+		setFriendsTableLayout();
 	}
 
 	@Override
@@ -158,6 +162,7 @@ public class ScoreActivity extends Activity {
 	}
 
 	private class LoadFriendScore extends AsyncTask<String, Integer, Boolean> {
+		private static final int CONNECTION_TIMEOUT = 10000;
 		private String playerName = null;
 		String responseString = null;
 
@@ -170,38 +175,50 @@ public class ScoreActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 			HttpResponse response = null;
 			playerName = params[0];
-
+			
+			BasicHttpParams httpParams = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParams, CONNECTION_TIMEOUT);
+		    
 			HttpClient client = new DefaultHttpClient();
 
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair(PLAYER_NAME_KEY, playerName));
-			HttpGet request = new HttpGet(GET_HIGHSCORES_URL + "?"
-					+ URLEncodedUtils.format(pairs, "utf-8"));
+			HttpGet request = new HttpGet(GET_HIGHSCORES_URL + "?" + URLEncodedUtils.format(pairs, "utf-8"));
 			request.setHeader("Accept", "application/json");
-
+			request.setParams(httpParams);
 			try {
 				response = client.execute(request);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
 			}
 			Log.i("test", playerName + " - " + response);
 			HttpEntity entity = response.getEntity();
+			Log.i("test", playerName + " - " + entity);
 			if (entity != null) {
 				try {
 					responseString = EntityUtils.toString(entity);
+					return true;
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					return false;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					return false;
 				}
 			}
-			return true;
+			return false;
 		}
 
 		@Override
@@ -259,6 +276,18 @@ public class ScoreActivity extends Activity {
 					table.addView(row);
 				}
 
+				// Hide progress bar
+				ScoreActivity.this.setProgressBarIndeterminate(false);
+				ScoreActivity.this.setProgressBarIndeterminateVisibility(false);
+			} else {
+				// Display error message
+				TableLayout table = (TableLayout) findViewById(R.id.friendsTableLayout);
+				TableRow row = new TableRow(getBaseContext());
+				TextView tv = new TextView(getBaseContext());
+				tv.setText(R.string.connection_error_message);
+				row.addView(tv);
+				table.addView(row);
+				
 				// Hide progress bar
 				ScoreActivity.this.setProgressBarIndeterminate(false);
 				ScoreActivity.this.setProgressBarIndeterminateVisibility(false);
