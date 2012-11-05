@@ -1,25 +1,16 @@
 package com.example.whowants.view;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.w3c.dom.Text;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
 import com.example.whowants.R;
+import com.example.whowants.model.Game;
 import com.example.whowants.model.Question;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.test.suitebuilder.annotation.LargeTest;
-import android.util.Log;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.support.v4.app.DialogFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -27,43 +18,17 @@ import android.widget.TextView;
 
 public class PlayActivity extends Activity {
 
-	private String SHARED_PREF_FILE_NAME = "savedPlayPreferences";
-	private String SHARED_PREF_QUESTION_NUMBER = "questionNumber";
-	private String SHARED_PREF_SCORE = "score";
-	private String SHARED_PREF_AUDIENCE = "isUsedAudienceJoker";
-	private String SHARED_PREF_FIFTY = "isUsedFiftyJoker";
-	private String SHARED_PREF_PHONE = "isUsedPhoneJoker";
-	private String QUESTION_TAG_NAME = "question";
-	private String QUESTION_NUMBER_ATTRIBUTE_NAME = "number";
-	private String ANSWER1_ATTRIBUTE_NAME = "answer1";
-	private String ANSWER2_ATTRIBUTE_NAME = "answer2";
-	private String ANSWER3_ATTRIBUTE_NAME = "answer3";
-	private String ANSWER4_ATTRIBUTE_NAME = "answer4";
-	private String AUDIENCE_ANSWER_ATTRIBUTE_NAME = "audience";
-	private String FIFTY_ANSWER1_ATTRIBUTE_NAME = "fifty1";
-	private String FIFTY_ANSWER2_ATTRIBUTE_NAME = "fifty2";
-	private String PHONE_ANSWER_ATTRIBUTE_NAME = "phone";
-	private String RIGHT_ANSWER_ATTRIBUTE_NAME = "right";
-	private String QUESTION_TEXT_ATTRIBUTE_NAME = "text";
-	
-	private int listLevels[] = {0,  100,  200,  300,  500, 
-			1000,  2000,  4000,  8000,  16000,  32000, 
-			64000, 125000, 250000, 500000, 1000000};
-
-	private int questionNumber = 1;
-	private int score = 0;
+	private Game game;
 	private ArrayList<Question> questionsList;
-	private boolean isUsedAudienceJoker = false;
-	private boolean isUsedFiftyJoker = false;
-	private boolean isUsedPhoneJoker = false;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play);
 		// Load questions list and saved state
-		questionsList = generateQuestionList();
-		loadSavedState();
+		game = new Game(this);
+		game.loadSavedState();
+		game.generateQuestionList();
 		draw();
 	}
 
@@ -94,101 +59,11 @@ public class PlayActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		saveCurrentState();
+		game.saveCurrentState();
 	}
 
-	private void loadSavedState() {
-		// Get sharedPreferences file
-		SharedPreferences sharedPreferences = getSharedPreferences(
-				SHARED_PREF_FILE_NAME, MODE_PRIVATE);
-		questionNumber = sharedPreferences.getInt(SHARED_PREF_QUESTION_NUMBER,
-				1);
-		score = sharedPreferences.getInt(SHARED_PREF_SCORE, 0);
-		isUsedAudienceJoker = sharedPreferences.getBoolean(
-				SHARED_PREF_AUDIENCE, false);
-		isUsedFiftyJoker = sharedPreferences.getBoolean(SHARED_PREF_FIFTY,
-				false);
-		isUsedPhoneJoker = sharedPreferences.getBoolean(SHARED_PREF_PHONE,
-				false);
-	}
-
-	private void saveCurrentState() {
-		// Get sharedPreferences file
-		SharedPreferences sharedPreferences = getSharedPreferences(
-				SHARED_PREF_FILE_NAME, MODE_PRIVATE);
-		Editor sharedPreferencesEditor = sharedPreferences.edit();
-		sharedPreferencesEditor.putInt(SHARED_PREF_QUESTION_NUMBER,
-				questionNumber);
-		sharedPreferencesEditor.putInt(SHARED_PREF_SCORE, score);
-		sharedPreferencesEditor.putBoolean(SHARED_PREF_AUDIENCE,
-				isUsedAudienceJoker);
-		sharedPreferencesEditor.putBoolean(SHARED_PREF_FIFTY, isUsedFiftyJoker);
-		sharedPreferencesEditor.putBoolean(SHARED_PREF_PHONE, isUsedPhoneJoker);
-		sharedPreferencesEditor.commit();
-	}
-
-	private ArrayList<Question> generateQuestionList() {
-		ArrayList<Question> list = new ArrayList<Question>();
-
-
-		try {
-			InputStream inputStream = getResources().openRawResource(
-					R.raw.questions0001);
-			XmlPullParser parser = XmlPullParserFactory.newInstance()
-					.newPullParser();
-			parser.setInput(inputStream, null);
-			int eventType = XmlPullParser.START_DOCUMENT;
-
-			while (eventType != XmlPullParser.END_DOCUMENT) {
-				if (eventType == XmlPullParser.START_TAG && parser.getName().equals(QUESTION_TAG_NAME)) {
-					// New question from the question tag
-					Question q = new Question(parser.getAttributeValue(null,
-							QUESTION_NUMBER_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									QUESTION_TEXT_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									ANSWER1_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									ANSWER2_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									ANSWER3_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									ANSWER4_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									RIGHT_ANSWER_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									AUDIENCE_ANSWER_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									PHONE_ANSWER_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									FIFTY_ANSWER1_ATTRIBUTE_NAME),
-							parser.getAttributeValue(null,
-									FIFTY_ANSWER2_ATTRIBUTE_NAME));
-					// Add the question to the list at the index corresponding
-					// to its number minus one because first question is number one (index 0)
-	
-					list.add(q.getNumber()-1, q);
-				}
-				eventType = parser.next();
-			}
-
-			inputStream.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			Log.e("exception", "Could not read questions from XML file.");
-		} catch (XmlPullParserException e) {
-			e.printStackTrace();
-			Log.e("exception", "Could not parse XML file.");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return list;
-	}
 	public void draw() {
-		Question currentQuestion = questionsList.get(questionNumber-1);
+		Question currentQuestion = game.getQuestion();
 		
 		Integer nbQuestion = currentQuestion.getNumber();
 		
@@ -199,7 +74,7 @@ public class PlayActivity extends Activity {
 		
 		TextView txtQuestionNumber = (TextView) findViewById(R.id.question_number);
 		TextView txtQuestion = (TextView) findViewById(R.id.question);
-		TextView txtLevel = (TextView) findViewById(R.id.level);
+		TextView txtNextLevel = (TextView) findViewById(R.id.level);
 		
 		btn1.setText(currentQuestion.getAnswer1());
 		btn2.setText(currentQuestion.getAnswer2());
@@ -207,6 +82,33 @@ public class PlayActivity extends Activity {
 		btn4.setText(currentQuestion.getAnswer4());
 		txtQuestionNumber.setText(nbQuestion.toString());
 		txtQuestion.setText(currentQuestion.getText());
-		txtLevel.setText(Integer.toString(listLevels[currentQuestion.getNumber()]));
+		txtNextLevel.setText(Integer.toString(game.getLevelValue(currentQuestion.getNumber())));
+	}
+	
+	private class EndGameDialogFragment extends DialogFragment {
+		
+		private boolean win;
+		
+		public void setWin(boolean win) {
+			this.win = win;
+		}
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        // Use the Builder class for convenient dialog construction
+	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());/*
+	        builder.setMessage(R.string.dialog_you_lost)
+	               .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                       // FIRE ZE MISSILES!
+	                   }
+	               })
+	               .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                       // User cancelled the dialog
+	                   }
+	               });
+	        // Create the AlertDialog object and return it*/
+	        return builder.create();
+	    }
 	}
 }

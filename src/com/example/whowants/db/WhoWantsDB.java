@@ -1,10 +1,13 @@
 package com.example.whowants.db;
 
-import com.example.whowants.model.Result;
+import com.example.whowants.model.HighScore;
+import com.example.whowants.model.HighScoreList;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class WhoWantsDB {
 	
@@ -13,12 +16,8 @@ public class WhoWantsDB {
 
 	
 	private static final String SCORE_TABLE = "ScoreTable";
-	private static final String COL_ID = "Id";
-	private static final int NUM_COL_ID = 0;
 	private static final String COL_NAME = "Name";
-	private static final int NUM_COL_NAME = 1;
 	private static final String COL_SCORE = "Score";
-	private static final int NUM_COL_SCORE = 2;
 	
 	private SQLiteDatabase db;
 	 
@@ -42,17 +41,33 @@ public class WhoWantsDB {
 		return db;
 	}
 	
-	public long insertResult(Result result){
+	public long insertResult(HighScore result){
 		/*
 		 * This method insert a result in the database
 		 */
 		ContentValues values = new ContentValues();
 		values.put(COL_NAME, result.getName());
-		values.put(COL_SCORE, result.getScore());
+		values.put(COL_SCORE, result.getScoring());
 		//insertion of the contentValue in the db
 		return db.insert(SCORE_TABLE, null, values);
 	}
 	
+	public HighScoreList getAllResults() {
+		Cursor cur = db.query(SCORE_TABLE, new String[] {COL_NAME, COL_SCORE}, null, null, null, null, null);
+		cur.moveToFirst();
+		HighScoreList hgList = new HighScoreList();
+		HighScore hg;
+		int i = 0;
+		while (!cur.isAfterLast()) {
+			i++;
+			Log.i("malus", "mira => "+i);
+			hg = new HighScore(cur.getString(0), cur.getInt(1));
+			hgList.getScores().add(hg);
+			cur.moveToNext();
+		}
+		cur.close();
+		return hgList;
+	}
 	public void deleteAllResults() {
 		/*
 		 * This method delete all the local results.

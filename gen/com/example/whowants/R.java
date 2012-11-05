@@ -84,6 +84,8 @@ public final class R {
         public static final int title_activity_play=0x7f050007;
         public static final int title_activity_score=0x7f050008;
         public static final int title_activity_settings=0x7f050006;
+        public static final int you_lost_dialog=0x7f050014;
+        public static final int you_won_dialog=0x7f050013;
     }
     public static final class style {
         public static final int AppTheme=0x7f070000;

@@ -19,6 +19,8 @@
     <string name="menu_jokers_fifty">50%</string>
     <string name="menu_jokers_audience">Audience</string>
     <string name="hint_player_name">Player Name</string>
+    <string name="you_won_dialog">You won!</string>
+    <string name="you_lost_dialog">You lost... :(</string>
 
     <string-array name="strNbHelp">
         <item>0</item>

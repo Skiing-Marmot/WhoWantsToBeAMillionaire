@@ -1,2 +1,4 @@
 1. Dashboard
 2. variables en dur dans playActivity.java
+3. Pourquoi chacune activité apparait comme une appli dans le smartphone?
+4.Checker les strings (qu'on ait toutes les strings que ce soit en anglais ou espagnol)
