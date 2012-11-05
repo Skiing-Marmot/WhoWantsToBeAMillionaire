@@ -10,13 +10,15 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class PlayActivity extends Activity {
+public class PlayActivity extends FragmentActivity {
 
 	private Game game;
 	private ArrayList<Question> questionsList;
@@ -85,30 +87,53 @@ public class PlayActivity extends Activity {
 		txtNextLevel.setText(Integer.toString(game.getLevelValue(currentQuestion.getNumber())));
 	}
 	
-	private class EndGameDialogFragment extends DialogFragment {
+	public static class GameDialogFragment extends DialogFragment {
 		
-		private boolean win;
-		
-		public void setWin(boolean win) {
-			this.win = win;
-		}
+		private String state;
+		private String messageDialog;
+		private String  messageBoutonYes;
+		private String messageBoutonNo;
+
 	    @Override
 	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	    	state = getArguments().getString("state");
+	    if (state == "win") {
+	    	messageDialog = getString(R.string.you_won_dialog);
+	    	messageBoutonYes = getString(R.string.yes);
+	    	messageBoutonNo = getString(R.string.no);
+	    } else if (state == "lost") {
+	    	messageDialog = getString(R.string.you_lost_dialog);
+	    	messageBoutonYes = getString(R.string.yes);
+	    	messageBoutonNo = getString(R.string.no);
+	    } else if (state == "next") {
+	    	messageDialog = getString(R.string.choice_next_dialog);
+	    	messageBoutonYes = getString(R.string.yes);
+	    	messageBoutonNo = getString(R.string.no);
+	    	
+	    }
+	    	
 	        // Use the Builder class for convenient dialog construction
-	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());/*
-	        builder.setMessage(R.string.dialog_you_lost)
-	               .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+	        builder.setMessage(messageDialog)
+	               .setPositiveButton(messageBoutonYes, new DialogInterface.OnClickListener() {
 	                   public void onClick(DialogInterface dialog, int id) {
-	                       // FIRE ZE MISSILES!
+	                       // Save the game and go to menu
 	                   }
 	               })
-	               .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	               .setNegativeButton(messageBoutonNo, new DialogInterface.OnClickListener() {
 	                   public void onClick(DialogInterface dialog, int id) {
-	                       // User cancelled the dialog
+	                       // Go to menu
 	                   }
 	               });
-	        // Create the AlertDialog object and return it*/
+	        // Create the AlertDialog object and return it
 	        return builder.create();
 	    }
+	}
+	public void questionAnswered (String state) {
+		GameDialogFragment dialog = new GameDialogFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("state", state);
+		dialog.setArguments(bundle);
+		dialog.show(getSupportFragmentManager(),":-)");
 	}
 }
