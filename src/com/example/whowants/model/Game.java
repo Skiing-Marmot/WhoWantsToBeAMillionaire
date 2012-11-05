@@ -10,14 +10,17 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.example.whowants.R;
+import com.example.whowants.view.PlayActivity;
+import com.example.whowants.view.PlayActivity.GameDialogFragment;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 public class Game {
-	private Activity activity;
+	private PlayActivity activity;
 
 	private String SHARED_PREF_FILE_NAME = "savedPlayPreferences";
 	private String SHARED_PREF_QUESTION_NUMBER = "questionNumber";
@@ -37,6 +40,7 @@ public class Game {
 	private String PHONE_ANSWER_ATTRIBUTE_NAME = "phone";
 	private String RIGHT_ANSWER_ATTRIBUTE_NAME = "right";
 	private String QUESTION_TEXT_ATTRIBUTE_NAME = "text";
+	private int nbQuestions = 15;
 
 	private int listLevels[] = { 0, 100, 200, 300, 500, 1000, 2000, 4000, 8000,
 			16000, 32000, 64000, 125000, 250000, 500000, 1000000 };
@@ -49,7 +53,7 @@ public class Game {
 	
 	private ArrayList<Question> listQuestions;
 
-	public Game(Activity activity) {
+	public Game(PlayActivity activity) {
 		this.activity = activity;
 	}
 
@@ -155,7 +159,7 @@ public class Game {
 	
 	public void testAnswer(String answer) {
 		if (answer == getQuestion().right) {
-			// next level or you w
+			if (questionNumber == nbQuestions) activity.questionAnswered("win");
 		}
 		else {
 			// 1. Save score

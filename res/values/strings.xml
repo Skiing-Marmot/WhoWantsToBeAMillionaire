@@ -19,9 +19,13 @@
     <string name="menu_jokers_fifty">50%</string>
     <string name="menu_jokers_audience">Audience</string>
     <string name="hint_player_name">Player Name</string>
-    <string name="you_won_dialog">You won!</string>
-    <string name="you_lost_dialog">You lost... :(</string>
     <string name="connection_error_message">Connection Problems: your friends\' scores \n cannot be downloaded.</string>
+    <string name="you_won_dialog">You won! Save the game?</string>
+    <string name="you_lost_dialog">You lost! Save the game?</string>
+    <string name="choice_next_dialog">Do you want to continue?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
 
     <string-array name="strNbHelp">
         <item>0</item>
