@@ -10,6 +10,7 @@ public class HighScoreList {
 	public HighScoreList() {
 		scores = new ArrayList<HighScore>();
 	}
+
 	public List<HighScore> getScores() {
 		return scores;
 	}

@@ -1,5 +1,8 @@
 #java specific
 *.class
+# auto generated
+bin/*
+gen/*
  
 ## generic files to ignore
 *~
