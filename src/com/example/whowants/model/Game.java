@@ -158,13 +158,36 @@ public class Game {
 	}
 	
 	public void testAnswer(String answer) {
-		if (answer == getQuestion().right) {
+		if (answer.equals(getQuestion().right)) {
 			if (questionNumber == nbQuestions) activity.questionAnswered("win");
 		}
 		else {
 			// 1. Save score
 			// 2. Display 
 		}
+	}
+	
+	public String getJokerAnswer(int type) {
+		Question currentQuestion = getQuestion();
+		int supposedAnswer = 0;
+		
+		if(type == R.id.menu_jokers_audience) {
+			supposedAnswer = currentQuestion.getAudience();
+		} else {
+			supposedAnswer = currentQuestion.getPhone();
+		}		
+		
+		switch(supposedAnswer) {
+		case 1:
+			return currentQuestion.getAnswer1();
+		case 2:
+			return currentQuestion.getAnswer2();
+		case 3:
+			return currentQuestion.getAnswer3();
+		case 4:
+			return currentQuestion.getAnswer4();
+		}
+		return null;
 	}
 
 }

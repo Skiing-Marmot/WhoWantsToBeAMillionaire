@@ -59,15 +59,18 @@ public class PlayActivity extends FragmentActivity {
 		int itemId = item.getItemId();
 		switch (itemId) {
 		case R.id.menu_jokers_phone:
-			// TODO phone call
+			String phoneAnswer = game.getJokerAnswer(R.id.menu_jokers_phone);
+			displayJokerAnswer(R.id.menu_jokers_phone, phoneAnswer);
 			break;
 		case R.id.menu_jokers_fifty:
 			// TODO 50/50
 			break;
 		case R.id.menu_jokers_audience:
-			// TODO audience help
+			String audienceAnswer = game.getJokerAnswer(R.id.menu_jokers_audience);
+			displayJokerAnswer(R.id.menu_jokers_audience, audienceAnswer);
 			break;
 		}
+		// TODO check if the user can use more jokers
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -142,12 +145,48 @@ public static class GameDialogFragment extends DialogFragment {
 	        return builder.create();
 	    }
 	}
+
 	public void questionAnswered (String state) {
 		GameDialogFragment dialog = new GameDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("state", state);
 		dialog.setArguments(bundle);
 		dialog.show(getSupportFragmentManager(),":-)");
+	}
+	
+private static class JokerDialogFragment extends DialogFragment {
+		
+		private int type;
+		private String answer;
+		private String messageDialog;
+
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	    	type = getArguments().getInt("type");
+	    	answer = getArguments().getString("answer");
+	    	
+	    	if(type == R.id.menu_jokers_audience) {
+	    		messageDialog = getResources().getString(R.string.audience_answer) + answer;
+	    	} else {
+	    		messageDialog = getResources().getString(R.string.phone_answer) + answer;
+	    	}
+	    	
+	        // Use the Builder class for convenient dialog construction
+	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+	        builder.setMessage(messageDialog);
+	        // Create the AlertDialog object and return it
+	        return builder.create();
+	    }
+	}
+	
+	private void displayJokerAnswer(int jokerType, String answer) {
+		// TODO Auto-generated method stub
+		JokerDialogFragment dialog = new JokerDialogFragment();
+		Bundle bundle = new Bundle();
+		bundle.putInt("type", jokerType);
+		bundle.putString("answer", answer);
+		dialog.setArguments(bundle);
+		dialog.show(getSupportFragmentManager(), "joker");
 	}
 	
 	private void sendScore(final String playerName, final int score) {
