@@ -12,5 +12,16 @@
     <string name="player_name">Nombre</string>
     <string name="question_nb_lbl">Pregunta:</string>
     <string name="level_lbl">Jugar por:</string>
+    <string name="local_tab_title">Resultados locales</string>
+    <string name="friends_tab_title">Resultados de los amigos</string>
+    <string name="menu_clean_scores">Borrar resultados locales</string>
+    <string name="menu_jokers_phone">Telefono</string>
+    <string name="menu_jokers_fifty">50%</string>
+    <string name="menu_jokers_audience">Publico</string>
+    <string name="hint_player_name">Nombre del jugador</string>
+    <string name="you_won_dialog">Has ganado !!!</string>
+    <string name="you_lost_dialog">Has perdido... :(</string>
+    <string name="connection_error_message">Problema de conexion: no se pueden descargar \n los resultados de tus amigos.</string>
+    
 
 </resources>

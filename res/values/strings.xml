@@ -21,7 +21,7 @@
     <string name="hint_player_name">Player Name</string>
     <string name="you_won_dialog">You won!</string>
     <string name="you_lost_dialog">You lost... :(</string>
-    <string name="connection_error_message">Connection Problems: your friends\' scores cannot be downloaded.</string>
+    <string name="connection_error_message">Connection Problems: your friends\' scores \n cannot be downloaded.</string>
 
     <string-array name="strNbHelp">
         <item>0</item>
