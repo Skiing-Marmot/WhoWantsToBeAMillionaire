@@ -178,6 +178,7 @@ public class ScoreActivity extends Activity {
 			
 			BasicHttpParams httpParams = new BasicHttpParams();
 			HttpConnectionParams.setConnectionTimeout(httpParams, CONNECTION_TIMEOUT);
+			HttpConnectionParams.setSoTimeout(httpParams, CONNECTION_TIMEOUT);
 		    
 			HttpClient client = new DefaultHttpClient();
 
