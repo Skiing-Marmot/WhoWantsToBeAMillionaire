@@ -36,6 +36,10 @@ public class PlayActivity extends FragmentActivity {
 	private Game game;
 	private ArrayList<Question> questionsList;
 	
+	public Game getGame() {
+		return game;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,7 +137,7 @@ public static class GameDialogFragment extends DialogFragment {
 	        builder.setMessage(messageDialog)
 	               .setPositiveButton(messageBoutonYes, new DialogInterface.OnClickListener() {
 	                   public void onClick(DialogInterface dialog, int id) {
-	                       // Save the game and go to menu
+	                	   getActivity().
 	                   }
 	               })
 	               .setNegativeButton(messageBoutonNo, new DialogInterface.OnClickListener() {

@@ -159,11 +159,16 @@ public class Game {
 	
 	public void testAnswer(String answer) {
 		if (answer.equals(getQuestion().right)) {
-			if (questionNumber == nbQuestions) activity.questionAnswered("win");
+			if (questionNumber == nbQuestions) {
+				activity.questionAnswered("win");
+			}
+			else
+			{
+				activity.questionAnswered("next");
+			}
 		}
 		else {
-			// 1. Save score
-			// 2. Display 
+			activity.questionAnswered("lost");
 		}
 	}
 	
