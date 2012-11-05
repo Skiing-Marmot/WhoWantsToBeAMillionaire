@@ -3,6 +3,7 @@ package com.example.whowants.model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -10,6 +11,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.example.whowants.R;
+import com.example.whowants.db.WhoWantsDB;
 import com.example.whowants.view.PlayActivity;
 import com.example.whowants.view.PlayActivity.GameDialogFragment;
 
@@ -24,6 +26,7 @@ public class Game {
 
 	private String SHARED_PREF_FILE_NAME = "savedPlayPreferences";
 	private String SHARED_PREF_QUESTION_NUMBER = "questionNumber";
+	private String SHARED_PREF_NAME_KEY = "playerName";
 	private String SHARED_PREF_SCORE = "score";
 	private String SHARED_PREF_AUDIENCE = "isUsedAudienceJoker";
 	private String SHARED_PREF_FIFTY = "isUsedFiftyJoker";
@@ -50,6 +53,7 @@ public class Game {
 	private boolean isUsedAudienceJoker = false;
 	private boolean isUsedFiftyJoker = false;
 	private boolean isUsedPhoneJoker = false;
+	private String playerName = "unknown player";
 	
 	private ArrayList<Question> listQuestions;
 
@@ -70,6 +74,7 @@ public class Game {
 		questionNumber = sharedPreferences.getInt(SHARED_PREF_QUESTION_NUMBER,
 				1);
 		score = sharedPreferences.getInt(SHARED_PREF_SCORE, 0);
+		playerName = sharedPreferences.getString(SHARED_PREF_NAME_KEY, "unknown");
 		isUsedAudienceJoker = sharedPreferences.getBoolean(
 				SHARED_PREF_AUDIENCE, false);
 		isUsedFiftyJoker = sharedPreferences.getBoolean(SHARED_PREF_FIFTY,
@@ -158,6 +163,7 @@ public class Game {
 	}
 	
 	public void testAnswer(String answer) {
+		Log.i("lol", answer + " = " + getQuestion().right);
 		if (answer.equals(getQuestion().right)) {
 			if (questionNumber == nbQuestions) {
 				activity.questionAnswered("win");
@@ -193,6 +199,15 @@ public class Game {
 			return currentQuestion.getAnswer4();
 		}
 		return null;
+	}
+	public void saveScore() {
+		WhoWantsDB db = new WhoWantsDB(activity);
+		db.open();
+		db.insertResult(new HighScore(playerName, listLevels[questionNumber-1]));
+		db.close();
+	}
+	public void nextLevel() {
+		questionNumber ++;
 	}
 
 }
