@@ -245,7 +245,6 @@ public class ScoreActivity extends Activity {
 
 				// Display the scores in the table
 				List<HighScore> scores = friendScoreList.getScores();
-				Collections.sort(scores, Collections.reverseOrder());
 				int length = scores.size();
 
 				for (int i = 0; i < length; i++) {
