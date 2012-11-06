@@ -98,16 +98,14 @@ public class PlayActivity extends FragmentActivity {
 		int itemId = item.getItemId();
 		switch (itemId) {
 		case R.id.menu_jokers_phone:
-			String phoneAnswer = game.getJokerAnswer(R.id.menu_jokers_phone);
-			displayJokerAnswer(R.id.menu_jokers_phone, phoneAnswer);
+			game.getJokerAnswer(R.id.menu_jokers_phone);
 			break;
 		case R.id.menu_jokers_fifty:
 			// TODO 50/50
+		    	game.getJokerAnswer(R.id.menu_jokers_fifty);
 			break;
 		case R.id.menu_jokers_audience:
-			String audienceAnswer = game
-					.getJokerAnswer(R.id.menu_jokers_audience);
-			displayJokerAnswer(R.id.menu_jokers_audience, audienceAnswer);
+			game.getJokerAnswer(R.id.menu_jokers_audience);
 			break;
 		}
 		// TODO check if the user can use more jokers
@@ -255,7 +253,7 @@ public class PlayActivity extends FragmentActivity {
 		}
 	}
 
-	private void displayJokerAnswer(int jokerType, String answer) {
+	public void displayJokerAnswer(int jokerType, String answer) {
 		// TODO Auto-generated method stub
 		JokerDialogFragment dialog = new JokerDialogFragment();
 		Bundle bundle = new Bundle();
@@ -313,6 +311,14 @@ public class PlayActivity extends FragmentActivity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 		}
+	}
+	
+	public void eliminateAnswer(int buttonId) {
+	    Button btn = (Button) findViewById(getResources().getIdentifier(
+		    "button"+buttonId,
+		    "id",
+		    this.getBaseContext().getPackageName()));
+	    btn.setEnabled(false);
 	}
 
 }
