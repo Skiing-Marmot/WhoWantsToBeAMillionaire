@@ -33,6 +33,7 @@ public class Game {
     private String	      SHARED_PREF_AUDIENCE	   = "isUsedAudienceJoker";
     private String	      SHARED_PREF_FIFTY	      = "isUsedFiftyJoker";
     private String	      SHARED_PREF_PHONE	      = "isUsedPhoneJoker";
+    private String		SHARED_PREF_JOKERS_NB = "selectedHelpsNbPosition";
     private String	      QUESTION_TAG_NAME	      = "question";
     private String	      QUESTION_NUMBER_ATTRIBUTE_NAME = "number";
     private String	      ANSWER1_ATTRIBUTE_NAME	 = "answer1";
@@ -156,9 +157,15 @@ public class Game {
     }
 
     public void getJokerAnswer(int type) {
+	
+	if(!canUseJoker()) {
+	    return;
+	}
+	
 	Question currentQuestion = getQuestion();
 
 	if (type == R.id.menu_jokers_fifty) {
+	    isUsedFiftyJoker = true;
 	    activity.eliminateAnswer(currentQuestion.getFifty1());
 	    activity.eliminateAnswer(currentQuestion.getFifty2());
 	} else {
@@ -166,8 +173,10 @@ public class Game {
 	    String stringSupposedAnswer = null;
 
 	    if (type == R.id.menu_jokers_audience) {
+		isUsedAudienceJoker = true;
 		supposedAnswer = currentQuestion.getAudience();
 	    } else {
+		isUsedPhoneJoker = false;
 		supposedAnswer = currentQuestion.getPhone();
 	    }
 
@@ -188,6 +197,17 @@ public class Game {
 	    activity.displayJokerAnswer(type, stringSupposedAnswer);
 	}
     }
+    
+    public boolean canUseJoker() {
+	SharedPreferences sharedSettingsPreferences = activity.getSharedPreferences(SHARED_PREF_SETTINGS_FILE_NAME, Activity.MODE_PRIVATE);
+	int allowedJokers = sharedSettingsPreferences.getInt(SHARED_PREF_JOKERS_NB, 0);
+	int usedJokersNb = 0;
+	if(isUsedAudienceJoker) usedJokersNb++;
+	if(isUsedFiftyJoker) usedJokersNb++;
+	if(isUsedPhoneJoker) usedJokersNb++;
+	
+	return ((allowedJokers - usedJokersNb) > 0);
+    }
 
     public void saveScore() {
 	// locally
@@ -202,6 +222,9 @@ public class Game {
 
     public void nextLevel() {
 	questionNumber++;
+	isUsedAudienceJoker = false;
+	isUsedFiftyJoker = false;
+	isUsedPhoneJoker = false;
     }
 
     private void sendScore(final String playerName, final int score) {
