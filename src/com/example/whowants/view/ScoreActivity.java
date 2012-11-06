@@ -93,14 +93,14 @@ public class ScoreActivity extends Activity {
 		// spec.setIndicator("Local Scores",
 		// getResources().getDrawable(R.drawable.Tab1Icon));
 		spec.setIndicator(getString(R.string.local_tab_title));
-		spec.setContent(R.id.tab1);
+		spec.setContent(R.id.ScrollView01);
 		host.addTab(spec);
 		// Second tab
 		spec = host.newTabSpec("FriendTab");
 		// spec.setIndicator("Friends Scores",
 		// getResources().getDrawable(R.drawable.Tab2Icon));
 		spec.setIndicator(getString(R.string.friends_tab_title));
-		spec.setContent(R.id.tab2);
+		spec.setContent(R.id.ScrollView02);
 		host.addTab(spec);
 		host.setCurrentTabByTag("LocalTab");
 	}

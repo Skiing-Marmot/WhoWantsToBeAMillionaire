@@ -3,7 +3,6 @@ package com.example.whowants.model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
