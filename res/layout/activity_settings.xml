@@ -41,7 +41,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Medium Text"
+                android:text="@string/settings_help_number"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
@@ -61,12 +61,13 @@
                 android:id="@+id/buttonAddFriend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/add_friend_button" />
 
             <EditText
                 android:id="@+id/editFriendName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_add_friend" />
 
         </TableRow>
 
