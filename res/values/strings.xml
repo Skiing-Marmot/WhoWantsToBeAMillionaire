@@ -32,6 +32,9 @@
     <string name="settings_help_number">Allowed jokers</string>
     <string name="add_friend_button">Add Friend</string>
     <string name="hint_add_friend">Friend name</string>
+    <string name="alert_msg_friend_score">If you want to see your friends\' score, you must set your username and add friends in the Settings.</string>
+    <string name="alert_msg_add_friend">To add friends, you have to set your username first and to type your friend name.</string>
+    <string name="alert_msg_add_friend_http">Connexion problems: your friend could not be added. Retry later.</string>
 
     <string-array name="strNbHelp">
         <item>0</item>

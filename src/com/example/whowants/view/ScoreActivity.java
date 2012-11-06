@@ -25,10 +25,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -45,7 +50,7 @@ import com.example.whowants.model.HighScoreList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class ScoreActivity extends Activity {
+public class ScoreActivity extends FragmentActivity {
 
 	private String SHARED_PREF_FILE_NAME = "settingsPreferences";
 	private String SHARED_PREF_NAME_KEY = "playerName";
@@ -136,11 +141,29 @@ public class ScoreActivity extends Activity {
 		// Get player name from the sharedPreferences
 		SharedPreferences sharedPreferences = getSharedPreferences(
 				SHARED_PREF_FILE_NAME, MODE_PRIVATE);
-		String playerName = sharedPreferences.getString(SHARED_PREF_NAME_KEY,
-				"");
-		if (playerName.length() > 0)
-			new LoadFriendScore().execute(playerName);
+		String playerName = sharedPreferences.getString(SHARED_PREF_NAME_KEY, "");
+		if (playerName.length() <= 0) {
+		    DialogFragment dialog = NoPlayerNameDialog.newInstance();
+		    dialog.show(getSupportFragmentManager(), "alert");
+		    return;
+		}
+		
+		new LoadFriendScore().execute(playerName);
 
+	}
+	
+	private static class NoPlayerNameDialog extends DialogFragment {
+
+		public static DialogFragment newInstance() { 
+			return new NoPlayerNameDialog(); 
+		} 
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) { 
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()); 
+			builder.setMessage(R.string.alert_msg_friend_score);
+			return builder.create(); 
+		} 
 	}
 
 	private class LoadFriendScore extends AsyncTask<String, Integer, Boolean> {
