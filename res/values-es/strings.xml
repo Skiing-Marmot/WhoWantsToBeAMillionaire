@@ -32,5 +32,8 @@
     <string name="settings_help_number">Ayudas permitidas</string>
     <string name="add_friend_button">Añadir Amigo</string>
     <string name="hint_add_friend">Nombre del amigo</string>
+    <string name="alert_msg_friend_score">Para ver los resultados de tus amigos, pon tu nombre en la pantalla de parametros y añade amigos.</string>
+    <string name="alert_msg_add_friend">Para añadir amigos, tienes que poner tu nombre primero y el nombre de tu amigo.</string>
+    <string name="alert_msg_add_friend_http">Problemas de red: no se puso añadir a tu amigo. Intentalo de nuevo más tarde.</string>
 
 </resources>

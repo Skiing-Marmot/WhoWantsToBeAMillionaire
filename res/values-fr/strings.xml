@@ -1,0 +1,39 @@
+<resources>
+
+    <string name="app_name">Qui Veut Gagner Des Millions</string>
+    <string name="menu_credits">A propos</string>
+    <string name="title_activity_main">Qui Veut Gagner Des Millions</string>
+    <string name="play">Jeu!</string>
+    <string name="scores">Scores</string>
+    <string name="settings">Paramètres</string>
+    <string name="title_activity_settings">Qui Veut Gagner Des Millions - Paramètres</string>
+    <string name="title_activity_play">Qui Veut Gagner Des Millions - Questions</string>
+    <string name="title_activity_score">Qui Veut Gagner Des Millions - Scores</string>
+    <string name="player_name">Nom</string>
+    <string name="question_nb_lbl">Question :</string>
+    <string name="level_lbl">Jeu pour :</string>
+    <string name="local_tab_title">Scores locaux</string>
+    <string name="friends_tab_title">Scores des amis</string>
+    <string name="menu_clean_scores">Effacer les scores locaux</string>
+    <string name="menu_jokers_phone">Téléphone</string>
+    <string name="menu_jokers_fifty">50%</string>
+    <string name="menu_jokers_audience">Public</string>
+    <string name="hint_player_name">Nom du joueur</string>
+    <string name="connection_error_message">Problème de connexion : impossible de télécharger les scores de tes amis.</string>
+    <string name="you_won_dialog">Tu as gagné !!!</string>
+    <string name="you_lost_dialog">Tu as perdu !!!</string>
+    <string name="choice_next_dialog">Bonne réponse !!! \n Veux-tu continuer ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+    <string name="audience_answer">Le public pense que la bonne réponse est : \n</string>
+    <string name="phone_answer">Ton ami pense que la bonne réponse est : \n</string>
+    <string name="settings_help_number">Jokers autorisés</string>
+    <string name="add_friend_button">Ajouter</string>
+    <string name="hint_add_friend">Nom de ton ami</string>
+    <string name="alert_msg_friend_score">Pour voir les scores de tes amis, renseigne d'abord ton nom dans l'écran des paramètres et ajoute des amis.</string>
+    <string name="alert_msg_add_friend">Pour ajouter un ami, tu dois d'abord avoir renseigné ton nom, puis entré le nom de ton ami.</string>
+    <string name="alert_msg_add_friend_http">Problèmes de réseau : ton ami n'a pas pu être ajouté. Réessaye plus tard.</string>
+
+</resources>
