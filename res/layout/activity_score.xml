@@ -26,33 +26,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
-                <LinearLayout
-                    android:id="@+id/tab1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                <ScrollView
+                    android:id="@+id/ScrollView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
 
                     <TableLayout
                         android:id="@+id/localTableLayout"
-                        android:stretchColumns="*"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="*" >
                     </TableLayout>
+                </ScrollView>
 
-                </LinearLayout>
+                <ScrollView
+                    android:id="@+id/ScrollView02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
 
-                <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-                    
                     <TableLayout
                         android:id="@+id/friendsTableLayout"
-                    	android:stretchColumns="*"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="*" >
                     </TableLayout>
-                    
-                </LinearLayout>
+                </ScrollView>
             </FrameLayout>
         </LinearLayout>
     </TabHost>
