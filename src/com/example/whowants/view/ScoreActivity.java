@@ -127,24 +127,6 @@ public class ScoreActivity extends Activity {
 			table.addView(row);
 		}
 		db.close();
-		// TODO fetch data from the local database
-		tv = new TextView(this);
-		row = new TableRow(this);
-		tv.setText("player1");
-		row.addView(tv);
-		tv = new TextView(this);
-		tv.setText("500");
-		row.addView(tv);
-		table.addView(row);
-
-		row = new TableRow(this);
-		tv = new TextView(this);
-		tv.setText("player1");
-		row.addView(tv);
-		tv = new TextView(this);
-		tv.setText("2000");
-		row.addView(tv);
-		table.addView(row);
 	}
 
 	private void setFriendsTableLayout() {
