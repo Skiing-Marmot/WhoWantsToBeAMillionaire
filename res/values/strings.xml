@@ -20,11 +20,12 @@
     <string name="menu_jokers_audience">Audience</string>
     <string name="hint_player_name">Player Name</string>
     <string name="connection_error_message">Connection Problems: your friends\' scores \n cannot be downloaded.</string>
-    <string name="you_won_dialog">You won! Save the score?</string>
-    <string name="you_lost_dialog">You lost! Save the score?</string>
+    <string name="you_won_dialog">You won!!!</string>
+    <string name="you_lost_dialog">You lost!!!</string>
     <string name="choice_next_dialog">Right answer !!! \n Do you want to continue?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="audience_answer">The audience thinks the right answer is: \n</string>
     <string name="phone_answer">Your friend thinks the right answer is: \n</string>

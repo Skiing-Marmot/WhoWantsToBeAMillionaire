@@ -20,11 +20,12 @@
     <string name="menu_jokers_audience">Publico</string>
     <string name="hint_player_name">Nombre del jugador</string>
     <string name="connection_error_message">Problema de conexion: no se pueden descargar \n los resultados de tus amigos.</string>
-    <string name="you_won_dialog">Has ganado! Guardar el resultado?</string>
-    <string name="you_lost_dialog">Has perdido! Guardar el resultado?</string>
+    <string name="you_won_dialog">Has ganado!!!</string>
+    <string name="you_lost_dialog">Has perdido!!!</string>
     <string name="choice_next_dialog">Respuesta correcta !!! \n Quieres continuar?</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="audience_answer">El publico cree que la respuesta correcta es: \n</string>
     <string name="phone_answer">Tu amigo cree que la respuesta correcta es: \n</string>

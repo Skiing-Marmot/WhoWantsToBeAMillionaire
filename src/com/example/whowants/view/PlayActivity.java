@@ -177,6 +177,7 @@ public class PlayActivity extends FragmentActivity {
 
 	private String state;
 	private String messageDialog;
+	private String positiveButton;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -186,13 +187,16 @@ public class PlayActivity extends FragmentActivity {
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	    if (state == "win") {
 		messageDialog = getString(R.string.you_won_dialog);
+		positiveButton = getString(R.string.ok);
 	    } else if (state == "lost") {
 		messageDialog = getString(R.string.you_lost_dialog);
+		positiveButton = getString(R.string.ok);
 	    } else if (state == "next") {
 		messageDialog = getString(R.string.choice_next_dialog);
-
+		positiveButton = getString(R.string.yes);
 	    }
-	    builder.setMessage(messageDialog).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+	    builder.setMessage(messageDialog).setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int id) {
 		    Game game = ((PlayActivity) getActivity()).game;
 		    if (state == "win") {
@@ -209,24 +213,20 @@ public class PlayActivity extends FragmentActivity {
 			((PlayActivity) getActivity()).draw();
 		    }
 		}
-	    }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int id) {
-		    Game game = ((PlayActivity) getActivity()).game;
-		    if (state == "win") {
-			// game.nextLevel();
-			game.reinitGame();
-			((PlayActivity) getActivity()).displayMenu();
-		    } else if (state == "lost") {
-			game.reinitGame();
-			((PlayActivity) getActivity()).displayMenu();
-		    } else if (state == "next") {
+	    });
+
+	    if (state.equals("next")) {
+		builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int id) {
+			Game game = ((PlayActivity) getActivity()).game;
 			// game.nextLevel();
 			game.saveScore();
 			game.reinitGame();
 			((PlayActivity) getActivity()).displayMenu();
 		    }
-		}
-	    });
+		});
+	    }
+
 	    // Create the AlertDialog object and return it
 	    return builder.create();
 	}
