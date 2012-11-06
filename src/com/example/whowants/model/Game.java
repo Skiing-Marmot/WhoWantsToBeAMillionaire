@@ -14,6 +14,7 @@ import com.example.whowants.R;
 import com.example.whowants.db.WhoWantsDB;
 import com.example.whowants.view.PlayActivity;
 import com.example.whowants.view.PlayActivity.GameDialogFragment;
+import com.example.whowants.view.PlayActivity.SendPlayerScore;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -24,7 +25,8 @@ import android.util.Log;
 public class Game {
 	private PlayActivity activity;
 
-	private String SHARED_PREF_FILE_NAME = "savedPlayPreferences";
+	private String SHARED_PREF_GAME_FILE_NAME = "savedPlayPreferences";
+	private String SHARED_PREF_SETTINGS_FILE_NAME = "settingsPreferences";
 	private String SHARED_PREF_QUESTION_NUMBER = "questionNumber";
 	private String SHARED_PREF_NAME_KEY = "playerName";
 	private String SHARED_PREF_SCORE = "score";
@@ -69,24 +71,26 @@ public class Game {
 	}
 	public void loadSavedState() {
 		// Get sharedPreferences file
-		SharedPreferences sharedPreferences = activity.getSharedPreferences(
-				SHARED_PREF_FILE_NAME, Activity.MODE_PRIVATE);
-		questionNumber = sharedPreferences.getInt(SHARED_PREF_QUESTION_NUMBER,
+		SharedPreferences sharedGamePreferences = activity.getSharedPreferences(
+				SHARED_PREF_GAME_FILE_NAME, Activity.MODE_PRIVATE);
+		questionNumber = sharedGamePreferences.getInt(SHARED_PREF_QUESTION_NUMBER,
 				1);
-		score = sharedPreferences.getInt(SHARED_PREF_SCORE, 0);
-		playerName = sharedPreferences.getString(SHARED_PREF_NAME_KEY, "unknown");
-		isUsedAudienceJoker = sharedPreferences.getBoolean(
+		score = sharedGamePreferences.getInt(SHARED_PREF_SCORE, 0);
+		isUsedAudienceJoker = sharedGamePreferences.getBoolean(
 				SHARED_PREF_AUDIENCE, false);
-		isUsedFiftyJoker = sharedPreferences.getBoolean(SHARED_PREF_FIFTY,
+		isUsedFiftyJoker = sharedGamePreferences.getBoolean(SHARED_PREF_FIFTY,
 				false);
-		isUsedPhoneJoker = sharedPreferences.getBoolean(SHARED_PREF_PHONE,
+		isUsedPhoneJoker = sharedGamePreferences.getBoolean(SHARED_PREF_PHONE,
 				false);
+		SharedPreferences sharedSettingsPreferences = activity.getSharedPreferences(
+			SHARED_PREF_SETTINGS_FILE_NAME, Activity.MODE_PRIVATE);
+		playerName = sharedSettingsPreferences.getString(SHARED_PREF_NAME_KEY, "unknown");
 	}
 
 	public void saveCurrentState() {
 		// Get sharedPreferences file
 		SharedPreferences sharedPreferences = activity.getSharedPreferences(
-				SHARED_PREF_FILE_NAME, Activity.MODE_PRIVATE);
+				SHARED_PREF_GAME_FILE_NAME, Activity.MODE_PRIVATE);
 		Editor sharedPreferencesEditor = sharedPreferences.edit();
 		sharedPreferencesEditor.putInt(SHARED_PREF_QUESTION_NUMBER,
 				questionNumber);
@@ -167,6 +171,7 @@ public class Game {
 		if (answer.equals(getQuestion().right)) {
 			if (questionNumber == nbQuestions) {
 				activity.questionAnswered("win");
+				
 			}
 			else
 			{
@@ -201,13 +206,34 @@ public class Game {
 		return null;
 	}
 	public void saveScore() {
+	    	// locally
 		WhoWantsDB db = new WhoWantsDB(activity);
 		db.open();
+		Log.i("test", playerName);
 		db.insertResult(new HighScore(playerName, listLevels[questionNumber-1]));
 		db.close();
+		// On the server
+		sendScore(playerName, listLevels[questionNumber-1]);
 	}
 	public void nextLevel() {
 		questionNumber ++;
+	}
+	
+	private void sendScore(final String playerName, final int score) {
+		if (playerName.length() <= 0) {
+			// TODO display dialog saying to set player name and friend name
+			// first
+			return;
+		}
+		activity.new SendPlayerScore().execute(playerName, String.valueOf(score));
+	}
+	
+	public void reinitGame() {
+	    questionNumber = 1;
+	    score = 0;
+	    isUsedAudienceJoker = false;
+	    isUsedFiftyJoker = false;
+	    isUsedPhoneJoker = false;
 	}
 
 }

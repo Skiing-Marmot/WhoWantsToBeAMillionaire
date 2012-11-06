@@ -170,12 +170,14 @@ public class PlayActivity extends FragmentActivity {
 										int id) {
 									Game game = ((PlayActivity) getActivity()).game;
 									if (state == "win") {
-										game.nextLevel();
 										game.saveScore();
+										//game.nextLevel();
+									    	game.reinitGame();
 										((PlayActivity) getActivity())
 												.displayMenu();
 									} else if (state == "lost") {
 										game.saveScore();
+									    	game.reinitGame();
 										((PlayActivity) getActivity())
 												.displayMenu();
 									} else if (state == "next") {
@@ -190,15 +192,18 @@ public class PlayActivity extends FragmentActivity {
 										int id) {
 									Game game = ((PlayActivity) getActivity()).game;
 									if (state == "win") {
-										game.nextLevel();
+										//game.nextLevel();
+									    	game.reinitGame();
 										((PlayActivity) getActivity())
 												.displayMenu();
 									} else if (state == "lost") {
+									    	game.reinitGame();
 										((PlayActivity) getActivity())
 												.displayMenu();
 									} else if (state == "next") {
-										game.nextLevel();
+										//game.nextLevel();
 										game.saveScore();
+										game.reinitGame();
 										((PlayActivity) getActivity())
 												.displayMenu();
 									}
@@ -260,16 +265,7 @@ public class PlayActivity extends FragmentActivity {
 		dialog.show(getSupportFragmentManager(), "joker");
 	}
 
-	private void sendScore(final String playerName, final int score) {
-		if (playerName.length() <= 0) {
-			// TODO display dialog saying to set player name and friend name
-			// first
-			return;
-		}
-		new SendPlayerScore().execute(playerName, String.valueOf(score));
-	}
-
-	private class SendPlayerScore extends AsyncTask<String, Integer, Boolean> {
+	public class SendPlayerScore extends AsyncTask<String, Integer, Boolean> {
 		private static final String SEND_SCORE_URL = "http://soletaken.disca.upv.es:8080/WWTBAM/rest/highscores";
 		private static final String PLAYER_NAME_KEY = "name";
 		private static final String SCORE_KEY = "scoring";
