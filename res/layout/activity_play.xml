@@ -1,100 +1,107 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:background="#666699"
-    android:gravity="center"
-    android:stretchColumns="1" >
+    android:id="@+id/scrollView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/background_color"
+        android:gravity="center"
+        android:stretchColumns="1" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/level_lbl"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/question_nb_lbl"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/question_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="1"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow2"
-        android:padding="15dip" >
-
-        <TextView
-            android:id="@+id/question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_span="4"
-            android:text="Question"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:typeface="serif" />
-    </TableRow>
-
-    <TableRow android:id="@+id/tableRow3" >
-
-        <Button
-            android:id="@+id/button1"
+        <TableRow
+            android:id="@+id/tableRow1"
             android:layout_width="match_parent"
-            android:layout_span="4"
-            android:text="Button" />
-    </TableRow>
+            android:layout_height="match_parent" >
 
-    <TableRow android:id="@+id/tableRow3" >
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/level_lbl"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:text="Button" />
-    </TableRow>
+            <TextView
+                android:id="@+id/level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TableRow android:id="@+id/tableRow4" >
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_nb_lbl"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:text="Button" />
-    </TableRow>
+            <TextView
+                android:id="@+id/question_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </TableRow>
 
-    <TableRow android:id="@+id/tableRow5" >
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:padding="15dip" >
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_span="4"
-            android:text="Button" />
-    </TableRow>
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_span="4"
+                android:text="Question"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:typeface="serif" />
+        </TableRow>
 
-</TableLayout>
+        <TableRow android:id="@+id/tableRow3" >
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/ButtonTheme"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:text="Button" />
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow4" >
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/ButtonTheme"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:text="Button" />
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow5" >
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/ButtonTheme"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:text="Button" />
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow6" >
+
+            <Button
+                android:id="@+id/button4"
+                style="@style/ButtonTheme"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:text="Button" />
+        </TableRow>
+    </TableLayout>
+
+</ScrollView>

@@ -1,5 +1,12 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Light" />
+    <color name="background_color">#672fb4</color>
+    <color name="button_text_color">#ffffff</color>
+    <style name="ButtonTheme">
+        <item name="android:background">@drawable/button_custom</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
 
 </resources>
