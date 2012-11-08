@@ -121,12 +121,12 @@ public class ScoreActivity extends FragmentActivity {
 		HighScoreList hgList = db.getAllResults();
 		
 		for (HighScore hg : hgList.getScores()) {
-			row = new TableRow(this);
+			row = new TableRow(getBaseContext());
 			
-			tv = new TextView(this);
+			tv = new TextView(getBaseContext());
 			tv.setText(hg.getName());
 			row.addView(tv);
-			tv = new TextView(this);
+			tv = new TextView(getBaseContext());
 			tv.setText(Integer.toString(hg.getScoring()));
 			row.addView(tv);
 			table.addView(row);
@@ -251,13 +251,10 @@ public class ScoreActivity extends FragmentActivity {
 
 				// Convert from JSON to HighScoreList object
 				GsonBuilder builder = new GsonBuilder();
-				Log.i("test", "apres builder");
 				Gson gson = builder.create();
-				Log.i("test", "apres gson");
 				JSONObject json = null;
 				try {
 					json = new JSONObject(responseString);
-					Log.i("test", "apres json");
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

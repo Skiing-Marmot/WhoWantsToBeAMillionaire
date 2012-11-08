@@ -6,7 +6,24 @@
     <style name="ButtonTheme">
         <item name="android:background">@drawable/button_custom</item>
         <item name="android:textColor">@color/button_text_color</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+    <style name="TitleTheme">
+        <item name="android:background">@drawable/title_bg2</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+    <style name="QuestionTheme">
+        <item name="android:background">@drawable/question_bg</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
     </style>
 
 </resources>

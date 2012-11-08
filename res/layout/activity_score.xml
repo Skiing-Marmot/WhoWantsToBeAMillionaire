@@ -1,13 +1,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/background_color" >
+    
+     <TextView
+         android:id="@+id/textView12"
+         style="@style/TitleTheme"
+         android:text="@string/scores_title" />
 
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/textView12"
         android:layout_centerVertical="true" >
 
         <LinearLayout
@@ -15,16 +22,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </TabWidget>
-
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
 
                 <ScrollView
                     android:id="@+id/ScrollView01"
@@ -52,6 +54,11 @@
                     </TableLayout>
                 </ScrollView>
             </FrameLayout>
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </TabWidget>
         </LinearLayout>
     </TabHost>
 

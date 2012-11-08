@@ -10,8 +10,8 @@
     <string name="title_activity_play">Who Wants To Be A Millionaire - Play</string>
     <string name="title_activity_score">Who Wants To Be A Millionaire - Scores</string>
     <string name="player_name">Name</string>
-    <string name="question_nb_lbl">Question:</string>
-    <string name="level_lbl">Play for:</string>
+    <string name="question_nb_lbl">Question: </string>
+    <string name="level_lbl">Play for: </string>
     <string name="local_tab_title">Local Scores</string>
     <string name="friends_tab_title">Friends Scores</string>
     <string name="menu_clean_scores">Delete local scores</string>
@@ -35,7 +35,13 @@
     <string name="alert_msg_friend_score">If you want to see your friends\' score, you must set your username and add friends in the Settings.</string>
     <string name="alert_msg_add_friend">To add friends, you have to set your username first and to type your friend name.</string>
     <string name="alert_msg_add_friend_http">Connexion problems: your friend could not be added. Retry later.</string>
-
+	<string name="credits_msg">Android application inspired by the \"Who Wants To Be A Millionaire\" TV show...</string>
+    <string name="home_title">Home</string>
+    <string name="credits_title">Credits</string>
+    <string name="play_title">Play</string>
+    <string name="settings_title">Settings</string>
+    <string name="scores_title">Scores</string>
+    
     <string-array name="strNbHelp">
         <item>0</item>
         <item>1</item>

@@ -1,4 +1,4 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,51 +6,47 @@
     android:layout_centerVertical="true"
     android:background="@color/background_color"
     android:gravity="center"
-    android:stretchColumns="1" >
+    android:orientation="vertical" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" >
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/TitleTheme"
+                android:text="@string/home_title" />
 
             <Button
                 android:id="@+id/buttonPlay"
                 style="@style/ButtonTheme"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_span="4"
                 android:text="@string/play"
                 android:textColor="@color/button_text_color" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
 
             <Button
                 android:id="@+id/buttonScores"
                 style="@style/ButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_span="4"
                 android:text="@string/scores" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
 
             <Button
                 android:id="@+id/buttonSettings"
                 style="@style/ButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_span="2"
                 android:text="@string/settings" />
+        </LinearLayout>
 
-        </TableRow>
-    </TableLayout>
+    </ScrollView>
+
+</LinearLayout>
