@@ -17,6 +17,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -225,6 +226,15 @@ public class PlayActivity extends FragmentActivity {
 	    // Create the AlertDialog object and return it
 	    return builder.create();
 	}
+
+	@Override
+	public void onCancel(DialogInterface dialog) {
+	 // If the game is finished, you cannot come back to the last question by clicking back button on the dialog
+	    if(state.equals("win") || state.equals("lost")) {
+		((PlayActivity) getActivity()).displayMenu();
+	    }
+	    super.onCancel(dialog);
+	}
     }
 
     public void questionAnswered(String state) {
@@ -237,7 +247,8 @@ public class PlayActivity extends FragmentActivity {
     }
 
     public void displayMenu() {
-	startActivity(new Intent(PlayActivity.this, MainActivity.class));
+	//startActivity(new Intent(PlayActivity.this, MainActivity.class));
+	this.finish();
     }
 
     private static class JokerDialogFragment extends DialogFragment {

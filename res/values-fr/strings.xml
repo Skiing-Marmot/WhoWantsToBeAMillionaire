@@ -32,8 +32,8 @@
     <string name="settings_help_number">Jokers autorisés</string>
     <string name="add_friend_button">Ajouter</string>
     <string name="hint_add_friend">Nom de ton ami</string>
-    <string name="alert_msg_friend_score">Pour voir les scores de tes amis, renseigne d'abord ton nom dans l'écran des paramètres et ajoute des amis.</string>
-    <string name="alert_msg_add_friend">Pour ajouter un ami, tu dois d'abord avoir renseigné ton nom, puis entré le nom de ton ami.</string>
-    <string name="alert_msg_add_friend_http">Problèmes de réseau : ton ami n'a pas pu être ajouté. Réessaye plus tard.</string>
+    <string name="alert_msg_friend_score">Pour voir les scores de tes amis, renseigne d\'abord ton nom dans l\'écran des paramètres et ajoute des amis.</string>
+    <string name="alert_msg_add_friend">Pour ajouter un ami, tu dois d\'abord avoir renseigné ton nom, puis entré le nom de ton ami.</string>
+    <string name="alert_msg_add_friend_http">Problèmes de réseau : ton ami n\'a pas pu être ajouté. Réessaye plus tard.</string>
 
 </resources>
