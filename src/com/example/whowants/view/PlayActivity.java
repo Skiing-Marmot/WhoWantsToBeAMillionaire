@@ -174,10 +174,12 @@ public class PlayActivity extends FragmentActivity {
 	private String state;
 	private String messageDialog;
 	private String positiveButton;
+	Game game = null;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    state = getArguments().getString("state");
+	    game = ((PlayActivity) getActivity()).game;
 
 	    // Use the Builder class for convenient dialog construction
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -194,14 +196,9 @@ public class PlayActivity extends FragmentActivity {
 
 	    builder.setMessage(messageDialog).setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int id) {
-		    Game game = ((PlayActivity) getActivity()).game;
-		    if (state == "win") {
+		    if (state == "win" || state == "lost") {
 			game.saveScore();
 			// game.nextLevel();
-			game.reinitGame();
-			((PlayActivity) getActivity()).displayMenu();
-		    } else if (state == "lost") {
-			game.saveScore();
 			game.reinitGame();
 			((PlayActivity) getActivity()).displayMenu();
 		    } else if (state == "next") {
@@ -214,7 +211,6 @@ public class PlayActivity extends FragmentActivity {
 	    if (state.equals("next")) {
 		builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int id) {
-			Game game = ((PlayActivity) getActivity()).game;
 			// game.nextLevel();
 			game.saveScore();
 			game.reinitGame();
@@ -231,6 +227,8 @@ public class PlayActivity extends FragmentActivity {
 	public void onCancel(DialogInterface dialog) {
 	 // If the game is finished, you cannot come back to the last question by clicking back button on the dialog
 	    if(state.equals("win") || state.equals("lost")) {
+		game.saveScore();
+		game.reinitGame();
 		((PlayActivity) getActivity()).displayMenu();
 	    }
 	    super.onCancel(dialog);
