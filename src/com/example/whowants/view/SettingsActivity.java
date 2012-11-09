@@ -2,11 +2,9 @@ package com.example.whowants.view;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -17,7 +15,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -26,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,8 +38,8 @@ public class SettingsActivity extends FragmentActivity {
     private String SHARED_PREF_FILE_NAME = "settingsPreferences";
     private String SHARED_PREF_NAME_KEY  = "playerName";
     private String SHARED_PREF_HELPS_KEY = "selectedHelpsNbPosition";
-    //private String ADD_FRIEND_URL	=  getResources().getString(R.string.add_friend_url);
-    private String ADD_FRIEND_URL = "";
+    // private String ADD_FRIEND_URL = getResources().getString(R.string.add_friend_url);
+    private String ADD_FRIEND_URL	= "";
     private String PLAYER_NAME_KEY       = "name";
     private String FRIEND_NAME_KEY       = "friend_name";
 
@@ -51,7 +47,7 @@ public class SettingsActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_settings);
-	ADD_FRIEND_URL	=  getResources().getString(R.string.add_friend_url);
+	ADD_FRIEND_URL = getResources().getString(R.string.add_friend_url);
 	// Load previously saved settings
 	restoreSettings();
 
@@ -69,7 +65,7 @@ public class SettingsActivity extends FragmentActivity {
     @Override
     protected void onPause() {
 	super.onPause();
-	
+
 	// Save the settings
 	saveSettings();
     }
@@ -87,7 +83,7 @@ public class SettingsActivity extends FragmentActivity {
 	Spinner helpsNbSpinner = (Spinner) findViewById(R.id.spinnerNbHelps);
 	helpsNbSpinner.setSelection(sharedPreferences.getInt(SHARED_PREF_HELPS_KEY, 0));
     }
-    
+
     /**
      * Saved the settings in the SharedPreferences
      */
@@ -107,8 +103,11 @@ public class SettingsActivity extends FragmentActivity {
 
     /**
      * Add a friend for the current player on the server
-     * @param playerName, the name of the current player
-     * @param friendName, the name of the friend to add
+     * 
+     * @param playerName
+     *            , the name of the current player
+     * @param friendName
+     *            , the name of the friend to add
      */
     private void addFriend(final String playerName, final String friendName) {
 	// If there is no player name or friend name, display a dialog to tell the player to add them
@@ -129,10 +128,6 @@ public class SettingsActivity extends FragmentActivity {
      */
     private static class AddFriendAlertDialog extends DialogFragment {
 
-	public static DialogFragment newInstance() {
-	    return new AddFriendAlertDialog();
-	}
-
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -151,10 +146,10 @@ public class SettingsActivity extends FragmentActivity {
 	protected Boolean doInBackground(String... params) {
 	    String playerName = params[0];
 	    String friendName = params[1];
-	    
+
 	    BasicHttpParams httpParams = new BasicHttpParams();
-		HttpConnectionParams.setConnectionTimeout(httpParams, CONNECTION_TIMEOUT);
-		HttpConnectionParams.setSoTimeout(httpParams, CONNECTION_TIMEOUT);
+	    HttpConnectionParams.setConnectionTimeout(httpParams, CONNECTION_TIMEOUT);
+	    HttpConnectionParams.setSoTimeout(httpParams, CONNECTION_TIMEOUT);
 
 	    HttpClient client = new DefaultHttpClient();
 	    HttpPost request = new HttpPost(ADD_FRIEND_URL);
