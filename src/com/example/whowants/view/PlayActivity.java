@@ -153,11 +153,15 @@ public class PlayActivity extends FragmentActivity {
 		txtNextLevel.setText(Integer.toString(game
 				.getLevelValue(currentQuestion.getNumber())));
 
-		// Enable all buttons if they had been disabled for the 50/50 joker
+		// Enable and display all buttons if they had been disabled for the 50/50 joker
 		btn1.setEnabled(true);
 		btn2.setEnabled(true);
 		btn3.setEnabled(true);
 		btn4.setEnabled(true);
+		btn1.setVisibility(android.view.View.VISIBLE);
+		btn2.setVisibility(android.view.View.VISIBLE);
+		btn3.setVisibility(android.view.View.VISIBLE);
+		btn4.setVisibility(android.view.View.VISIBLE);
 
 		// Enable all menu items if they had been disabled
 		if (menuItem0 != null && menuItem1 != null && menuItem2 != null) {
@@ -336,6 +340,7 @@ public class PlayActivity extends FragmentActivity {
 				"button" + buttonId, "id",
 				this.getBaseContext().getPackageName()));
 		btn.setEnabled(false);
+		btn.setVisibility(android.view.View.INVISIBLE);
 	}
 
 }
