@@ -57,7 +57,7 @@ public class ScoreActivity extends FragmentActivity {
 
 	private String SHARED_PREF_FILE_NAME = "settingsPreferences";
 	private String SHARED_PREF_NAME_KEY = "playerName";
-	private final String GET_HIGHSCORES_URL = getResources().getString(R.string.send_score_url);
+	private String GET_HIGHSCORES_URL = "";
 	private static final String PLAYER_NAME_KEY = "name";
 
 	@Override
@@ -65,6 +65,7 @@ public class ScoreActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_score);
+		GET_HIGHSCORES_URL = getResources().getString(R.string.send_score_url);
 		// Initialize the tab structure
 		setScoresTab();
 		// Display the local scores

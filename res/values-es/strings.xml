@@ -19,7 +19,7 @@
     <string name="menu_jokers_fifty">50%</string>
     <string name="menu_jokers_audience">Publico</string>
     <string name="hint_player_name">Nombre del jugador</string>
-    <string name="connection_error_message">Problema de conexion: no se pueden descargar \n los resultados de tus amigos.</string>
+    <string name="connection_error_message">Problema de conexion: no se pueden descargar los resultados de tus amigos.</string>
     <string name="you_won_dialog">Has ganado!!!</string>
     <string name="you_lost_dialog">Has perdido!!!</string>
     <string name="choice_next_dialog">Respuesta correcta !!! \n Quieres continuar?</string>
@@ -35,5 +35,11 @@
     <string name="alert_msg_friend_score">Para ver los resultados de tus amigos, pon tu nombre en la pantalla de parametros y añade amigos.</string>
     <string name="alert_msg_add_friend">Para añadir amigos, tienes que poner tu nombre primero y el nombre de tu amigo.</string>
     <string name="alert_msg_add_friend_http">Problemas de red: no se puso añadir a tu amigo. Intentalo de nuevo más tarde.</string>
+    <string name="home_title">Home</string>
+    <string name="credits_title">Creditos</string>
+    <string name="play_title">Juego</string>
+    <string name="settings_title">Ajustos</string>
+    <string name="scores_title">Resultados</string>
+    <string name="credits_msg">Aplicación para Android, inspirada por el juego \"Quién Quiere Ser Millionario\"...</string>
 
 </resources>

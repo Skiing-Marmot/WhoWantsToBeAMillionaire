@@ -42,7 +42,8 @@ public class SettingsActivity extends FragmentActivity {
     private String SHARED_PREF_FILE_NAME = "settingsPreferences";
     private String SHARED_PREF_NAME_KEY  = "playerName";
     private String SHARED_PREF_HELPS_KEY = "selectedHelpsNbPosition";
-    private String ADD_FRIEND_URL	= getResources().getString(R.string.add_friend_url);
+    //private String ADD_FRIEND_URL	=  getResources().getString(R.string.add_friend_url);
+    private String ADD_FRIEND_URL = "";
     private String PLAYER_NAME_KEY       = "name";
     private String FRIEND_NAME_KEY       = "friend_name";
 
@@ -50,7 +51,7 @@ public class SettingsActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_settings);
-	
+	ADD_FRIEND_URL	=  getResources().getString(R.string.add_friend_url);
 	// Load previously saved settings
 	restoreSettings();
 
@@ -104,7 +105,13 @@ public class SettingsActivity extends FragmentActivity {
 	sharedPreferencesEditor.commit();
     }
 
+    /**
+     * Add a friend for the current player on the server
+     * @param playerName, the name of the current player
+     * @param friendName, the name of the friend to add
+     */
     private void addFriend(final String playerName, final String friendName) {
+	// If there is no player name or friend name, display a dialog to tell the player to add them
 	if (playerName.length() <= 0 || friendName.length() <= 0) {
 	    AddFriendAlertDialog dialog = new AddFriendAlertDialog();
 	    Bundle bundle = new Bundle();
@@ -113,9 +120,13 @@ public class SettingsActivity extends FragmentActivity {
 	    dialog.show(getSupportFragmentManager(), "alert");
 	    return;
 	}
+	// Else, send the new friend on the server
 	new AddFriendTask().execute(playerName, friendName);
     }
 
+    /**
+     * Class to display an alert message to the player
+     */
     private static class AddFriendAlertDialog extends DialogFragment {
 
 	public static DialogFragment newInstance() {
@@ -130,13 +141,11 @@ public class SettingsActivity extends FragmentActivity {
 	}
     }
 
+    /**
+     * AsyncTask to send a new added friend to the server
+     */
     private class AddFriendTask extends AsyncTask<String, Integer, Boolean> {
 	private static final int CONNECTION_TIMEOUT = 10000;
-
-	@Override
-	protected void onPreExecute() {
-	    // TODO Auto-generated method stub
-	}
 
 	@Override
 	protected Boolean doInBackground(String... params) {
@@ -156,9 +165,9 @@ public class SettingsActivity extends FragmentActivity {
 	    try {
 		request.setEntity(new UrlEncodedFormEntity(pairs));
 		request.setParams(httpParams);
-		HttpResponse response = client.execute(request);
-		Log.i("test", playerName + " - " + friendName);
+		client.execute(request);
 	    } catch (UnsupportedEncodingException e) {
+		// If the friend cannot be added to the server because, we notify the user
 		e.printStackTrace();
 		AddFriendAlertDialog dialog = new AddFriendAlertDialog();
 		Bundle bundle = new Bundle();
@@ -194,16 +203,11 @@ public class SettingsActivity extends FragmentActivity {
 	}
 
 	@Override
-	protected void onProgressUpdate(Integer... values) {
-	    // TODO Auto-generated method stub
-	    // Change something in the interface
-	}
-
-	@Override
 	protected void onPostExecute(Boolean result) {
 	    // TODO Auto-generated method stub
 	    super.onPostExecute(result);
 	    if (result) {
+		// Once the friend is added to the server, we can clear the friend textfield
 		final EditText friendNameTxt = (EditText) findViewById(R.id.editFriendName);
 		friendNameTxt.setText("");
 	    }
