@@ -1,0 +1,198 @@
+<quizz>
+
+    <question
+        answer1="Caroline du Nord"
+        answer2="Floride"
+        answer3="Texas"
+        answer4="Arizona"
+        audience="2"
+        fifty1="1"
+        fifty2="4"
+        number="1"
+        phone="2"
+        right="2"
+        text="Quel est l'état le plus ensoleillé des Etats-Unis ?" />
+
+    <question
+        answer1="New Hampshire"
+        answer2="Washington"
+        answer3="Wyoming"
+        answer4="Manitoba"
+        audience="4"
+        fifty1="2"
+        fifty2="3"
+        number="2"
+        phone="4"
+        right="4"
+        text="Parmi ces réponses, laquelle n'est pas un état des Etats-Unis ?" />
+
+    <question
+        answer1="Bulbizar"
+        answer2="L'ile du pokemon géant"
+        answer3="L'attaque du pokemon préhistorique"
+        answer4="Je te choisis !"
+        audience="2"
+        fifty1="1"
+        fifty2="4"
+        number="3"
+        phone="3"
+        right="3"
+        text="Quel est le troisième livre de la série Pokemon ?" />
+
+    <question
+        answer1="Le Roi Jean"
+        answer2="Le Roi Henri VIII"
+        answer3="Le Roi Richard Coeur de Lion"
+        answer4="Le Roi Georges III"
+        audience="3"
+        fifty1="2"
+        fifty2="3"
+        number="4"
+        phone="1"
+        right="1"
+        text="Qui fut forcé de signer la Magna Carta ?" />
+
+    <question
+        answer1="Monitor"
+        answer2="Royal Caribean"
+        answer3="Queen Elizabeth"
+        answer4="Titanic"
+        audience="4"
+        fifty1="1"
+        fifty2="2"
+        number="5"
+        phone="4"
+        right="4"
+        text="Quel bateau coula en 1912 pour son premier voyage, alors qu'il était dit insubmersible ?" />
+
+    <question
+        answer1="Roger Moore"
+        answer2="Pierce Brosnan"
+        answer3="Timothy Dalton"
+        answer4="Sean Connery"
+        audience="3"
+        fifty1="2"
+        fifty2="3"
+        number="6"
+        phone="3"
+        right="1"
+        text="¿Qui fut le troisième acteur à incarner James Bond dans les films MGM ? (en excluant Casino Royal)" />
+
+    <question
+        answer1="La baleine à bosse"
+        answer2="La baleine bleue"
+        answer3="L'orque"
+        answer4="Le cachalot"
+        audience="2"
+        fifty1="2"
+        fifty2="3"
+        number="7"
+        phone="2"
+        right="4"
+        text="Quelle est la baleine à dents la plus grande ?" />
+
+    <question
+        answer1="1728"
+        answer2="1732"
+        answer3="1713"
+        answer4="1776"
+        audience="2"
+        fifty1="1"
+        fifty2="4"
+        number="8"
+        phone="2"
+        right="2"
+        text="En quelle année est né George Washington ?" />
+
+    <question
+        answer1="Red Room"
+        answer2="China Room"
+        answer3="State Dining Room"
+        answer4="East Room"
+        audience="2"
+        fifty1="3"
+        fifty2="4"
+        number="9"
+        phone="2"
+        right="2"
+        text="Laquelle de ces pièces se situe au deuxième étage de la maison blanche ?" />
+
+    <question
+        answer1="Inocent III"
+        answer2="Leon VIII"
+        answer3="Gregoire VII"
+        answer4="Gregoire I"
+        audience="1"
+        fifty1="3"
+        fifty2="4"
+        number="10"
+        phone="2"
+        right="2"
+        text="Quel pape commença son reigne en 963 ?" />
+
+    <question
+        answer1="Le Parana"
+        answer2="Le Xingu"
+        answer3="L'Amazone"
+        answer4="L'Orinoco"
+        audience="1"
+        fifty1="2"
+        fifty2="3"
+        number="11"
+        phone="1"
+        right="1"
+        text="Quel est le deuxième plus long fleuve d'Amérique du Sud ?" />
+
+    <question
+        answer1="La Ford U"
+        answer2="La Ford A"
+        answer3="L'Edsel"
+        answer4="La Mustang"
+        audience="4"
+        fifty1="1"
+        fifty2="3"
+        number="12"
+        phone="4"
+        right="2"
+        text="Quelle Ford a remplacé la Ford T ?" />
+
+    <question
+        answer1="1860"
+        answer2="1793"
+        answer3="1912"
+        answer4="1826"
+        audience="4"
+        fifty1="1"
+        fifty2="3"
+        number="13"
+        phone="4"
+        right="4"
+        text="Quand a été prise la première photographie ?" />
+
+    <question
+        answer1="St. Moritz, Suisse"
+        answer2="Stockholm, Suède"
+        answer3="Oslo, Norvège"
+        answer4="Chamonix, France"
+        audience="1"
+        fifty1="2"
+        fifty2="3"
+        number="14"
+        phone="4"
+        right="4"
+        text="Où furent célébrés les premiers Jeux Olympiques d'hiver ?" />
+
+    <question
+        answer1="Brooklyn-Battery"
+        answer2="Lincoln"
+        answer3="Queens Midtown"
+        answer4="Manhattan"
+        audience="4"
+        fifty1="1"
+        fifty2="3"
+        number="15"
+        phone="4"
+        right="4"
+        text="Parmi ces réponses, laquelle n'est pas le nom d'un tunnel de New-York ?" />
+
+</quizz>
