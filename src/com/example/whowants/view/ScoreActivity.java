@@ -50,11 +50,14 @@ import com.example.whowants.model.HighScoreList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Class for the Score activity
+ */
 public class ScoreActivity extends FragmentActivity {
 
 	private String SHARED_PREF_FILE_NAME = "settingsPreferences";
 	private String SHARED_PREF_NAME_KEY = "playerName";
-	private static final String GET_HIGHSCORES_URL = "http://soletaken.disca.upv.es:8080/WWTBAM/rest/highscores";
+	private final String GET_HIGHSCORES_URL = getResources().getString(R.string.send_score_url);
 	private static final String PLAYER_NAME_KEY = "name";
 
 	@Override
@@ -62,8 +65,11 @@ public class ScoreActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_score);
+		// Initialize the tab structure
 		setScoresTab();
+		// Display the local scores
 		setLocalTableLayout();
+		// Display the scores of the player's friends
 		setFriendsTableLayout();
 	}
 
@@ -80,6 +86,9 @@ public class ScoreActivity extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Delete local scores from the database and from the local scores tab
+	 */
 	private void deleteLocalScores() {
 		WhoWantsDB db = new WhoWantsDB(this.getBaseContext());
 		db.open();
@@ -90,12 +99,15 @@ public class ScoreActivity extends FragmentActivity {
 		// TODO delete scores from DB
 	}
 
+	/**
+	 * Create the two tabs
+	 */
 	private void setScoresTab() {
 		TabHost host = (TabHost) findViewById(android.R.id.tabhost);
 		host.setup();
 		// First tab
 		TabSpec spec = host.newTabSpec("LocalTab");
-		 spec.setIndicator(getString(R.string.local_tab_title), getResources().getDrawable(R.drawable.ic_action_local));
+		spec.setIndicator(getString(R.string.local_tab_title), getResources().getDrawable(R.drawable.ic_action_local));
 		spec.setContent(R.id.ScrollView01);
 		host.addTab(spec);
 		// Second tab
@@ -106,16 +118,20 @@ public class ScoreActivity extends FragmentActivity {
 		host.setCurrentTabByTag("LocalTab");
 	}
 
+	/**
+	 * Display the scores saved locally 
+	 */
 	private void setLocalTableLayout() {
 		TableLayout table = (TableLayout) findViewById(R.id.localTableLayout);
 		TableRow row; 
 		TextView tv; 
 
+		// Get the scores from the local database
 		WhoWantsDB db = new WhoWantsDB(this.getBaseContext());
 		db.open();
-		
 		HighScoreList hgList = db.getAllResults();
 		
+		// Add a row for each score with the player name and his score
 		for (HighScore hg : hgList.getScores()) {
 			row = new TableRow(getBaseContext());
 			
@@ -125,11 +141,16 @@ public class ScoreActivity extends FragmentActivity {
 			tv = new TextView(getBaseContext());
 			tv.setText(Integer.toString(hg.getScoring()));
 			row.addView(tv);
+			
 			table.addView(row);
 		}
 		db.close();
 	}
 
+	/**
+	 * Display the scores for the players' friends
+	 * The scores are loaded from the server
+	 */
 	private void setFriendsTableLayout() {
 		// Display progress bar
 		ScoreActivity.this.setProgressBarIndeterminate(true);
@@ -138,16 +159,21 @@ public class ScoreActivity extends FragmentActivity {
 		SharedPreferences sharedPreferences = getSharedPreferences(
 				SHARED_PREF_FILE_NAME, MODE_PRIVATE);
 		String playerName = sharedPreferences.getString(SHARED_PREF_NAME_KEY, "");
+		
+		// If the player has not set his name, we display a popup dialog to tell him we cannot load his friends' scores
 		if (playerName.length() <= 0) {
 		    DialogFragment dialog = NoPlayerNameDialog.newInstance();
 		    dialog.show(getSupportFragmentManager(), "alert");
 		    return;
 		}
 		
+		// Else, we load their scores through a LoadFriendScore AsyncTask
 		new LoadFriendScore().execute(playerName);
-
 	}
 	
+	/**
+	 * Class to display an indication for the player
+	 */
 	private static class NoPlayerNameDialog extends DialogFragment {
 
 		public static DialogFragment newInstance() { 
@@ -162,6 +188,9 @@ public class ScoreActivity extends FragmentActivity {
 		} 
 	}
 
+	/**
+	 * AsyncTask used to loaded the scores of the player's friends
+	 */
 	private class LoadFriendScore extends AsyncTask<String, Integer, Boolean> {
 		private static final int CONNECTION_TIMEOUT = 10000;
 		private String playerName = null;
@@ -203,9 +232,7 @@ public class ScoreActivity extends FragmentActivity {
 				e.printStackTrace();
 				return false;
 			}
-			Log.i("test", playerName + " - " + response);
 			HttpEntity entity = response.getEntity();
-			Log.i("test", playerName + " - " + entity);
 			if (entity != null) {
 				try {
 					responseString = EntityUtils.toString(entity);
@@ -224,17 +251,9 @@ public class ScoreActivity extends FragmentActivity {
 		}
 
 		@Override
-		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
-			// Change something in the interface
-		}
-
-		@Override
 		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if (result) {
-
 				if (responseString.equals("null")) {
 					return;
 				}
@@ -242,8 +261,6 @@ public class ScoreActivity extends FragmentActivity {
 				TableLayout table = (TableLayout) findViewById(R.id.friendsTableLayout);
 				TableRow row;
 				TextView tv;
-
-				Log.i("test", responseString);
 
 				// Convert from JSON to HighScoreList object
 				GsonBuilder builder = new GsonBuilder();
@@ -257,7 +274,6 @@ public class ScoreActivity extends FragmentActivity {
 				}
 				HighScoreList friendScoreList = gson.fromJson(json.toString(),
 						HighScoreList.class);
-				Log.i("test", "apres conversion");
 
 				// Display the scores in the table
 				List<HighScore> scores = friendScoreList.getScores();

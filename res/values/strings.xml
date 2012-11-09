@@ -43,6 +43,7 @@
     <string name="scores_title">Scores</string>
     
     <string name="send_score_url">http://soletaken.disca.upv.es:8080/WWTBAM/rest/highscores</string>
+    <string name="add_friend_url">http://soletaken.disca.upv.es:8080/WWTBAM/rest/friends</string>
     
     <string-array name="strNbHelp">
         <item>0</item>

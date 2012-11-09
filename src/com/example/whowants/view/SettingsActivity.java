@@ -34,12 +34,15 @@ import android.widget.Spinner;
 
 import com.example.whowants.R;
 
+/**
+ * Class for the Settings activity
+ */
 public class SettingsActivity extends FragmentActivity {
 
     private String SHARED_PREF_FILE_NAME = "settingsPreferences";
     private String SHARED_PREF_NAME_KEY  = "playerName";
     private String SHARED_PREF_HELPS_KEY = "selectedHelpsNbPosition";
-    private String ADD_FRIEND_URL	= "http://soletaken.disca.upv.es:8080/WWTBAM/rest/friends";
+    private String ADD_FRIEND_URL	= getResources().getString(R.string.add_friend_url);
     private String PLAYER_NAME_KEY       = "name";
     private String FRIEND_NAME_KEY       = "friend_name";
 
@@ -47,12 +50,14 @@ public class SettingsActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_settings);
+	
+	// Load previously saved settings
 	restoreSettings();
 
 	final Button buttonAddFriend = (Button) findViewById(R.id.buttonAddFriend);
 	buttonAddFriend.setOnClickListener(new View.OnClickListener() {
 	    public void onClick(View v) {
-		// TODO Auto-generated method stub
+		// on click, add the friend to the the current player friends
 		final EditText playerNameTxt = (EditText) findViewById(R.id.editPlayerName);
 		final EditText friendNameTxt = (EditText) findViewById(R.id.editFriendName);
 		addFriend(playerNameTxt.getText().toString(), friendNameTxt.getText().toString());
@@ -63,9 +68,14 @@ public class SettingsActivity extends FragmentActivity {
     @Override
     protected void onPause() {
 	super.onPause();
+	
+	// Save the settings
 	saveSettings();
     }
 
+    /**
+     * Restore the previously saved settings
+     */
     private void restoreSettings() {
 	// Get sharedPreferences file
 	SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_FILE_NAME, MODE_PRIVATE);
@@ -76,7 +86,10 @@ public class SettingsActivity extends FragmentActivity {
 	Spinner helpsNbSpinner = (Spinner) findViewById(R.id.spinnerNbHelps);
 	helpsNbSpinner.setSelection(sharedPreferences.getInt(SHARED_PREF_HELPS_KEY, 0));
     }
-
+    
+    /**
+     * Saved the settings in the SharedPreferences
+     */
     private void saveSettings() {
 	// Get sharedPreferences file
 	SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_FILE_NAME, MODE_PRIVATE);
