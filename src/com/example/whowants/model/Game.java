@@ -18,9 +18,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
+/**
+ * Class for the game management
+ */
 public class Game {
-    private PlayActivity	activity;
-
+    
+    // Constants
     private String	      SHARED_PREF_GAME_FILE_NAME     = "savedPlayPreferences";
     private String	      SHARED_PREF_SETTINGS_FILE_NAME = "settingsPreferences";
     private String	      SHARED_PREF_QUESTION_NUMBER    = "questionNumber";
@@ -43,8 +46,9 @@ public class Game {
     private String	      PHONE_ANSWER_ATTRIBUTE_NAME    = "phone";
     private String	      RIGHT_ANSWER_ATTRIBUTE_NAME    = "right";
     private String	      QUESTION_TEXT_ATTRIBUTE_NAME   = "text";
+    
+    private PlayActivity	activity;
     private int		 nbQuestions		    = 15;
-
     private int		 listLevels[]		   = { 0, 100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000,
 	    125000, 250000, 500000, 1000000		   };
 
@@ -60,22 +64,42 @@ public class Game {
 
     private ArrayList<Question> listQuestions;
 
+    /**
+     * Constructor
+     * @param activity The PlayActivity in which the game is played
+     */
     public Game(PlayActivity activity) {
 	this.activity = activity;
     }
 
+    /**
+     * Return the number of the current question
+     * @return the number of the current question
+     */
     public int getQuestionNumber() {
 	return questionNumber;
     }
 
+    /**
+     * Return the current score of the player
+     * @return the current score
+     */
     public int getScore() {
 	return score;
     }
 
+    /**
+     * Return the score for a given level
+     * @param level the game level (corresponding to a question number)
+     * @return the score for that level
+     */
     public int getLevelValue(int level) {
 	return listLevels[level];
     }
 
+    /**
+     * Reload previous start when the activity is restarted
+     */
     public void loadSavedState() {
 	// Get sharedPreferences file
 	SharedPreferences sharedGamePreferences = activity.getSharedPreferences(SHARED_PREF_GAME_FILE_NAME, Activity.MODE_PRIVATE);
@@ -89,6 +113,9 @@ public class Game {
 	playerName = sharedSettingsPreferences.getString(SHARED_PREF_NAME_KEY, "unknown");
     }
 
+    /**
+     * Save current state when the activity is paused
+     */
     public void saveCurrentState() {
 	// Save sharedPreferences file
 	SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREF_GAME_FILE_NAME, Activity.MODE_PRIVATE);
@@ -103,6 +130,10 @@ public class Game {
 
     }
 
+    /**
+     * Build the list of Question objects from the XML file
+     * All 15 questions are loaded because it is too expensive to open/read/close 15 times a file while 15 objects are not much in the memory
+     */
     public void generateQuestionList() {
 	listQuestions = new ArrayList<Question>();
 
@@ -122,10 +153,10 @@ public class Game {
 				    RIGHT_ANSWER_ATTRIBUTE_NAME), parser.getAttributeValue(null, AUDIENCE_ANSWER_ATTRIBUTE_NAME),
 			    parser.getAttributeValue(null, PHONE_ANSWER_ATTRIBUTE_NAME), parser.getAttributeValue(null,
 				    FIFTY_ANSWER1_ATTRIBUTE_NAME), parser.getAttributeValue(null, FIFTY_ANSWER2_ATTRIBUTE_NAME));
+		    
 		    // Add the question to the list at the index corresponding
 		    // to its number minus one because first question is number
 		    // one (index 0)
-
 		    listQuestions.add(q.getNumber() - 1, q);
 		}
 		eventType = parser.next();
@@ -144,11 +175,19 @@ public class Game {
 	}
     }
 
+    /**
+     * Return the current question (that the player must answer)
+     * @return the current Question object
+     */
     public Question getQuestion() {
 	return listQuestions.get(questionNumber - 1);
 	// -1 because the array starts at 0
     }
 
+    /**
+     * Test if the given answer is the right answer or not and according to the answer and game level, display a different dialog in the PlayActivity
+     * @param answer, the answer chosen by the player
+     */
     public void testAnswer(String answer) {
 	if (answer.equals(getQuestion().right)) {
 	    nextLevel();
@@ -166,28 +205,36 @@ public class Game {
 	}
     }
 
+    /**
+     * Used when the player asks for a joker
+     * @param type, the joker type: R.id.menu_jokers_fifty, R.id.menu_jokers_audience or R.id.menu_jokers_phone
+     */
     public void getJokerAnswer(int type) {
 
+	// We first test if the player can use a joker (according to the helps number he set in Settings)
 	if (!canUseJoker()) { return; }
 
 	Question currentQuestion = getQuestion();
 
-	if (type == R.id.menu_jokers_fifty) {
+	if (type == R.id.menu_jokers_fifty) { // 50/50 joker
 	    isUsedFiftyJoker = true;
+	    // The eliminateAnswer method will hide the corresponding bad answer
 	    activity.eliminateAnswer(currentQuestion.getFifty1());
 	    activity.eliminateAnswer(currentQuestion.getFifty2());
-	} else {
+	} else { // Phone or Audience joker
 	    int supposedAnswer = 0;
 	    String stringSupposedAnswer = null;
 
-	    if (type == R.id.menu_jokers_audience) {
+	    // We get the supposed answer of the audience / friend
+	    if (type == R.id.menu_jokers_audience) { // Audience joker
 		isUsedAudienceJoker = true;
 		supposedAnswer = currentQuestion.getAudience();
-	    } else {
+	    } else { // Phone joker
 		isUsedPhoneJoker = true;
 		supposedAnswer = currentQuestion.getPhone();
 	    }
 
+	    // We get the String answer according to the supposed answer number
 	    switch (supposedAnswer) {
 		case 1:
 		    stringSupposedAnswer = currentQuestion.getAnswer1();
@@ -202,10 +249,15 @@ public class Game {
 		    stringSupposedAnswer = currentQuestion.getAnswer4();
 		    break;
 	    }
+	    // We display the supposed answer in a popup
 	    activity.displayJokerAnswer(type, stringSupposedAnswer);
 	}
     }
 
+    /**
+     * Test if the user can use a joker or if it has already used has much jokers as he was allowed to (from the corresponding settings)
+     * @return true if the player can use a joker, false else
+     */
     public boolean canUseJoker() {
 	SharedPreferences sharedSettingsPreferences = activity.getSharedPreferences(SHARED_PREF_SETTINGS_FILE_NAME, Activity.MODE_PRIVATE);
 	int allowedJokers = sharedSettingsPreferences.getInt(SHARED_PREF_JOKERS_NB, 0);
@@ -219,13 +271,14 @@ public class Game {
 	if (isUsedPhoneJoker) {
 	    usedJokersNb++;
 	}
-	
-
-	    Log.i("test", "allowed: "+allowedJokers+" used: "+usedJokersNb);
 
 	return ((allowedJokers - usedJokersNb) > 0);
     }
 
+    /**
+     * Save the score in the local database and send it to the server
+     * @param scoreToSave, the score to save
+     */
     public void saveScore(int scoreToSave) {
 	// locally
 	WhoWantsDB db = new WhoWantsDB(activity);
@@ -236,6 +289,9 @@ public class Game {
 	sendScore(playerName, scoreToSave);
     }
 
+    /**
+     * Pass to the next level: increase questionNumber, update the score and the last passed stage, reset the data about jokers use
+     */
     public void nextLevel() {
 	questionNumber++;
 	score = listLevels[questionNumber - 1];
@@ -249,15 +305,22 @@ public class Game {
 	isUsedPhoneJoker = false;
     }
 
+    /**
+     * Send the score to the server through the SendPlayerScore AsyncTask
+     * @param playerName, the name of the local player
+     * @param score, the score to send
+     */
     private void sendScore(final String playerName, final int score) {
 	if (playerName.length() <= 0) {
-	    // TODO display dialog saying to set player name and friend name
-	    // first
+	    // TODO display dialog saying to set player name first
 	    return;
 	}
 	activity.new SendPlayerScore().execute(playerName, String.valueOf(score));
     }
 
+    /**
+     * Reset the game after the player has win, lost or abandonned the game 
+     */
     public void reinitGame() {
 	questionNumber = 1;
 	score = 0;
