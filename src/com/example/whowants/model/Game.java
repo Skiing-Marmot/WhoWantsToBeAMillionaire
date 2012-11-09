@@ -181,7 +181,7 @@ public class Game {
 	public void testAnswer(String answer) {
 		if (answer.equals(getQuestion().right)) {
 			nextLevel();
-			if (questionNumber == nbQuestions) {
+			if (questionNumber == nbQuestions+1) {
 				activity.questionAnswered("win");
 				saveScore(score);
 				reinitGame();
