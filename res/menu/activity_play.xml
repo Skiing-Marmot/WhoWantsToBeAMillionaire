@@ -1,8 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_jokers_phone"
-        android:title="@string/menu_jokers_phone" />
+        android:title="@string/menu_jokers_phone"
+        android:icon="@drawable/phone" />
     <item android:id="@+id/menu_jokers_fifty"
-        android:title="@string/menu_jokers_fifty" />
+        android:title="@string/menu_jokers_fifty"
+        android:icon="@drawable/fifty" />
     <item android:id="@+id/menu_jokers_audience"
-        android:title="@string/menu_jokers_audience" />
+        android:title="@string/menu_jokers_audience"
+        android:icon="@drawable/audience" />
 </menu>
