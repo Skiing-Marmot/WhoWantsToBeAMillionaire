@@ -13,7 +13,7 @@ public class HighScoreList {
     }
 
     public List<HighScore> getScores() {
-	sortScore();
+	sortScore(); // Sort scores before returning them
 	return scores;
     }
 
@@ -21,6 +21,9 @@ public class HighScoreList {
 	this.scores = scores;
     }
 
+    /**
+     * Sort the scores in ascending order
+     */
     private void sortScore() {
 	Collections.sort(scores, Collections.reverseOrder());
     }

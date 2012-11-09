@@ -14,35 +14,42 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Class for the Main activity (Home)
+ */
 public class MainActivity extends FragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		// Button to the Settings screen
 		final Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
 		buttonSettings.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(
-						new Intent(MainActivity.this,
+			    // on click, start the Settings activity
+				startActivity(new Intent(MainActivity.this,
 								SettingsActivity.class));
 			}
 		});
 
+		// Button to the game
 		final Button buttonPlay = (Button) findViewById(R.id.buttonPlay);
 		buttonPlay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				// on click, start the Play activity
 				startActivity(
 						new Intent(MainActivity.this,
 								PlayActivity.class));
 			}
 		});
+		
+		// Button to the Scores screen
 		final Button buttonScores = (Button) findViewById(R.id.buttonScores);
 		buttonScores.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				// on click, start the Score activity
 				startActivity(
 						new Intent(MainActivity.this,
 								ScoreActivity.class));
@@ -59,12 +66,16 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+		// There is only one item, it display the Credits dialog
 		DialogFragment test = MyDialog.newInstance();
-		test.show(getSupportFragmentManager(), "lol");
+		test.show(getSupportFragmentManager(), "dialog");
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Class for the Credits dialog
+	 * It extends DialogDragment
+	 */
 	private static class MyDialog extends DialogFragment {
 
 		public static DialogFragment newInstance() { 

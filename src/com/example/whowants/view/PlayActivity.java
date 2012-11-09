@@ -30,30 +30,41 @@ import com.example.whowants.R;
 import com.example.whowants.model.Game;
 import com.example.whowants.model.Question;
 
+/*
+ * Class for the Play activity (game)
+ */
 public class PlayActivity extends FragmentActivity {
-
+    
 	private static final int JOKERS_NUMBER = 3;
 	private Game game;
 	private MenuItem menuItem0 = null;
 	private MenuItem menuItem1 = null;
 	private MenuItem menuItem2 = null;
 
-	public Game getGame() {
-		return game;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play);
-		// Load questions list and saved state
+		// Create a new Game, load questions list and saved state
 		game = new Game(this);
 		game.loadSavedState();
 		game.generateQuestionList();
+		// Initialize the interface and display the current question
 		init();
 		draw();
 	}
+	
+	/**
+	 * Return the game played by this activity
+	 * @return the game
+	 */
+	public Game getGame() {
+	    return game;
+	}
 
+	/**
+	 * Initialize the interface and bind the buttons to the corresponding answer
+	 */
 	public void init() {
 		Button btn1 = (Button) findViewById(R.id.button1);
 		Button btn2 = (Button) findViewById(R.id.button2);
@@ -80,7 +91,6 @@ public class PlayActivity extends FragmentActivity {
 				game.testAnswer("4");
 			}
 		});
-
 	}
 
 	@Override
@@ -94,29 +104,21 @@ public class PlayActivity extends FragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO
+		// The players asks for a joker
 		int itemId = item.getItemId();
+		// The corresponding joker is hidden and cannot be used anymore for that question
 		item.setEnabled(false).setVisible(false);
-		switch (itemId) {
-		case R.id.menu_jokers_phone:
-			game.getJokerAnswer(R.id.menu_jokers_phone);
-			break;
-		case R.id.menu_jokers_fifty:
-			// TODO 50/50
-			game.getJokerAnswer(R.id.menu_jokers_fifty);
-			break;
-		case R.id.menu_jokers_audience:
-			game.getJokerAnswer(R.id.menu_jokers_audience);
-			break;
-		}
-		// TODO check if the user can use more jokers
+		// The Game Class will give the corresponding joker
+		game.getJokerAnswer(itemId);
+		
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
+		// Before displaying the menu, we test if the user is still allowed to use joker
 		if (!game.canUseJoker()) {
+		    // if not, we hide all the jokers
 			for (int i = 0; i < JOKERS_NUMBER; i++) {
 				menu.getItem(i).setEnabled(false).setVisible(false);
 			}
@@ -127,9 +129,14 @@ public class PlayActivity extends FragmentActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		// We save the current state of the game
 		game.saveCurrentState();
 	}
 
+	/**
+	 * Draw the interface according to the current question
+	 * That method is called for each new question
+	 */
 	public void draw() {
 		Question currentQuestion = game.getQuestion();
 
@@ -171,6 +178,9 @@ public class PlayActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * Class for the dialog used to inform the player about his answer (if it is correct, if it has won or lost)
+	 */
 	public static class GameDialogFragment extends DialogFragment {
 
 		private String state;
@@ -196,23 +206,30 @@ public class PlayActivity extends FragmentActivity {
 				positiveButton = getString(R.string.yes);
 			}
 
+			// Positive button: OK if win or lost to close the dialog and go back to the Home screen
+			// Yes if there is a next question, to continue to that next question
 			builder.setMessage(messageDialog).setPositiveButton(positiveButton,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							if (state == "win" || state == "lost") {
+							    	// Display the Home screen
 								((PlayActivity) getActivity()).displayMenu();
 							} else if (state == "next") {
+							    	// Display the next question
 								((PlayActivity) getActivity()).draw();
 							}
 						}
 					});
 
 			if (state.equals("next")) {
+			    // Negative button: No if there is a next question, stop the game there and go back to the Home screen
 				builder.setNegativeButton(getString(R.string.no),
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+							    	// Save the score and reinitialize the game
 								game.saveScore(game.getScore());
 								game.reinitGame();
+								// Display the Home screen
 								((PlayActivity) getActivity()).displayMenu();
 							}
 						});
@@ -233,6 +250,10 @@ public class PlayActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * Called from the game class to the display the dialog according to the answer and the corresponding state
+	 * @param state, the game state: "next" if there is a next question, "lost" or "won" if the player has lost or won
+	 */
 	public void questionAnswered(String state) {
 		GameDialogFragment dialog = new GameDialogFragment();
 		Bundle bundle = new Bundle();
@@ -242,11 +263,17 @@ public class PlayActivity extends FragmentActivity {
 
 	}
 
+	/**
+	 * Display the Home screen by finishing this activity
+	 */
 	public void displayMenu() {
 		// startActivity(new Intent(PlayActivity.this, MainActivity.class));
 		this.finish();
 	}
 
+	/**
+	 * Class to display the phone and audience jokers answers
+	 */
 	public static class JokerDialogFragment extends DialogFragment {
 
 		private int type;
@@ -275,6 +302,11 @@ public class PlayActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * Called by the game class to display the audience or phone jokers answers
+	 * @param jokerType, the type of joker: R.id.menu_jokers_audience or R.id.menu_jokers_phone
+	 * @param answer, the supposed answer given by the joker
+	 */
 	public void displayJokerAnswer(int jokerType, String answer) {
 		// TODO Auto-generated method stub
 		JokerDialogFragment dialog = new JokerDialogFragment();
@@ -285,15 +317,13 @@ public class PlayActivity extends FragmentActivity {
 		dialog.show(getSupportFragmentManager(), "joker");
 	}
 
+	/**
+	 * AsyncTask used to send the score to the server
+	 */
 	public class SendPlayerScore extends AsyncTask<String, Integer, Boolean> {
-		private static final String SEND_SCORE_URL = "http://soletaken.disca.upv.es:8080/WWTBAM/rest/highscores";
 		private static final String PLAYER_NAME_KEY = "name";
 		private static final String SCORE_KEY = "scoring";
-
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-		}
+		private final String SEND_SCORE_URL = getResources().getString(R.string.send_score_url);
 
 		@Override
 		protected Boolean doInBackground(String... params) {
@@ -321,20 +351,12 @@ public class PlayActivity extends FragmentActivity {
 			}
 			return true;
 		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
-			// Change something in the interface
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-		}
 	}
 
+	/**
+	 * Called by the game class to hide a false answer when the 50/50 joker is used
+	 * @param buttonId, the number of the button to hide
+	 */
 	public void eliminateAnswer(int buttonId) {
 		Button btn = (Button) findViewById(getResources().getIdentifier(
 				"button" + buttonId, "id",

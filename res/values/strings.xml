@@ -42,6 +42,8 @@
     <string name="settings_title">Settings</string>
     <string name="scores_title">Scores</string>
     
+    <string name="send_score_url">http://soletaken.disca.upv.es:8080/WWTBAM/rest/highscores</string>
+    
     <string-array name="strNbHelp">
         <item>0</item>
         <item>1</item>
