@@ -95,16 +95,12 @@ public class ScoreActivity extends FragmentActivity {
 		host.setup();
 		// First tab
 		TabSpec spec = host.newTabSpec("LocalTab");
-		// spec.setIndicator("Local Scores",
-		// getResources().getDrawable(R.drawable.Tab1Icon));
-		spec.setIndicator(getString(R.string.local_tab_title));
+		 spec.setIndicator(getString(R.string.local_tab_title), getResources().getDrawable(R.drawable.ic_action_local));
 		spec.setContent(R.id.ScrollView01);
 		host.addTab(spec);
 		// Second tab
 		spec = host.newTabSpec("FriendTab");
-		// spec.setIndicator("Friends Scores",
-		// getResources().getDrawable(R.drawable.Tab2Icon));
-		spec.setIndicator(getString(R.string.friends_tab_title));
+		spec.setIndicator(getString(R.string.friends_tab_title), getResources().getDrawable(R.drawable.ic_action_friends));
 		spec.setContent(R.id.ScrollView02);
 		host.addTab(spec);
 		host.setCurrentTabByTag("LocalTab");
